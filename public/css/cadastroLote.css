@@ -102,27 +102,6 @@
     color: #2f2d2d;
 }
 
-#tabela-CadastroLote thead th {
-    border-top: none;
-}
-
-#tabela-CadastroLote thead {
-    width: 100%;
-}
-
-#tabela-CadastroLote body {
-    width: 100%;
-} 
-
-#tabela-CadastroLote_wrapper{
-    padding: 0.3rem;
-    
-}
-
-.container_table .dataTables_wrapper .row {
-    margin: 0;
-}
-
 
 @media(max-width: 1200px) {
 
@@ -157,27 +136,13 @@
         font-size: 0.8rem;
     }
 
-    div.dataTables_wrapper div.dataTables_filter {
-        text-align: right;
-    }
+
 }
 
 
 @media(max-width: 765px) {
 
-    .container_table {
-        height: 28rem;
-    }
 
-    div.dataTables_wrapper div.dataTables_info{
-        display: none;
-    }
-
-    div.dataTables_wrapper div.dataTables_paginate {
-        text-align: left;
-        display: flex;
-        justify-content: flex-end;
-    }
 }
 
 @media(max-width: 698px) {
@@ -294,13 +259,6 @@
     #idBarcode {
         display: block;
         width: 255px;
-    }
-
-    .table td, .table th {
-        padding: 2px;
-    }
-    div.dataTables_wrapper div.dataTables_filter input {
-        width: 150px;
     }
 
 }
