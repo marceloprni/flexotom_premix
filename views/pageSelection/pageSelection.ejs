@@ -1,0 +1,36 @@
+<%- include ('../partials/header.ejs'); -%>
+    <%- include ('../partials/navbar.ejs'); -%>
+
+<main class="container_principal">
+    <section>
+        <% if(privilegio1 == 2 || privilegio1 == 2004 || privilegio1 == 1004) { %>
+            <div class="container_link cadastroLote">
+                <img src="/image/pageSelection/arrow_low.svg" alt="">
+                <a href="/cadastroLote">CADASTRO <br>DE <br>LOTE</a>
+            </div>
+
+            <div class="container_link vinculacaoLote"> 
+                <img src="/image/pageSelection/arrow_low.svg" alt="">
+                <a href="/vincularLote">VINCULAÇÃO <br>DE <br>LOTE</a>
+            </div>
+
+            <div class="container_link visualizarLote visualizar_lote_pageselect">
+                <img src="/image/pageSelection/binoculos.svg" alt="">
+                <a href="/vizualizarLote">VISUALIZAÇÃO <br>DE <br>LOTE</a>
+            </div>
+        <% } else if (privilegio1 == 3 || privilegio1 == 6 || privilegio1 == 5) { %>
+            <div class="container_link vinculacaoLote"> 
+                <img src="/image/pageSelection/arrow_low.svg" alt="">
+                <a href="/vincularLote">VINCULAÇÃO <br>DE <br>LOTE</a>
+            </div>
+
+            <div class="container_link visualizarLote  visualizar_lote_pageselect">
+                <img src="/image/pageSelection/binoculos.svg" alt="">
+                <a href="/vizualizarLote">VISUALIZAÇÃO <br>DE <br>LOTE</a>
+            </div>
+        <% } %> 
+    </section>
+</main>
+        
+<%- include ('../partials/footer.ejs'); -%>
+<script type="module" src="/js/pageSelection/pageSelection.js"></script>

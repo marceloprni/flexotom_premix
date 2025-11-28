@@ -1,0 +1,57 @@
+<%- include ('../partials/header.ejs'); -%>
+<%- include ('../partials/navbar.ejs'); -%>
+
+<% if(acionaWarmin == true)  { %>
+    <div class="alert alert-dark alert-dismissible fade show" role="alert" id="alerta">
+        <strong id="mensagemErro"><%= erro %></strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<% } %>  
+
+<div class="login_container_principal">
+
+  
+    <img src="/image/login/img_centro.png" alt="imagem centro">
+
+    <div class="container-login">
+      <form class="formLogin" method="POST" action="/login">
+                    
+        <span>LOGIN</span>
+        <label class="label-input" for="">
+            <i class="far fa-envelope icon-modify"></i>
+            <input 
+                  type="text" 
+                  class="form-control" 
+                  id="usuario" 
+                  name="usuario" 
+                  placeholder="Email ou Usuário" 
+                  required
+            >
+        </label>
+        
+        <span>PASSWORD</span>
+        <label class="label-input" for="">
+            <i class="fas fa-lock icon-modify"></i>
+            <input 
+                type="password"  
+                class="form-control" 
+                id="senha" 
+                name="senha" 
+                placeholder="Password" 
+                required
+            >
+        </label>
+    
+        <button type="submit" class="btn_enviar">Entrar</button>     
+      </form>
+    </div>
+
+    <div class="footer"></div>
+</div>
+
+
+
+<%- include ('../partials/footer.ejs'); -%>
+<script  type="module" src="/js/Login/Login.js"></script>

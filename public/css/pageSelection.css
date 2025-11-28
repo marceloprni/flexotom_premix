@@ -1,0 +1,190 @@
+.container_principal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.container_principal section {
+   display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 6.25rem;
+    width: 68.75rem;
+    height: 18.68rem;
+}
+
+.container_link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 19rem;
+    height: 19rem;
+    gap: 1.63rem;
+
+    background-color: rgba(217, 217, 217, 0.5);
+    border-radius: 0.62rem;
+
+    cursor: pointer;
+    
+}
+
+
+.container_link img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.container_link a {
+    
+width: 265px;
+height: 108px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 30px;
+line-height: 36px;
+text-align: center;
+
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+text-decoration: none;
+
+}
+
+.container_section_second {
+    margin-top: 0.8rem;
+}
+
+.container_table {
+    width: 100%;
+    height: 23rem;
+    background-color: rgba(217, 217, 217, 0.5);
+    border-radius: 0.62rem;
+}
+
+#tabela-CadastroLote_wrapper {
+    padding: 0.5rem;
+    width: 100%;
+    height: 35%;
+}
+
+.row {
+    width: 100%;
+    
+}
+
+#tabela-CadastroLote {
+    width: 100%;
+}
+
+.tableSelected{
+    background-color: #E5192E; 
+    color:#FFFFFF;
+}
+
+
+
+@media(max-width: 1200px) {
+    .container_principal section {
+        flex-direction: column;
+        gap: 3rem;
+        width: 50%;
+        height: 50rem;
+    }
+
+    .container_link {
+        width: 50%;
+        height: 20%;
+    }
+
+    .container_link img {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .container_link a {
+        font-size: 15px;
+    }
+
+}
+
+@media(max-width: 995px) {
+    .container_principal {
+        height: 80vh;
+    }
+
+    .container_principal section {
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 70%;
+        height: 80%;
+    }
+
+    .container_link {
+        width: 60%;
+        height: 30%;
+    }
+
+    .container_link img {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .container_link a {
+        font-size: 15px;
+    }
+
+}
+
+@media(max-width: 768px) {
+    .visualizar_lote_pageselect {
+        display: none;
+    }
+}
+
+
+@media(max-width: 480px) {
+
+
+}
+
+
+@media(max-width: 380px) {
+    .container_principal {
+        height: 80vh;
+    }
+    .container_principal section {
+      
+        height: 15rem;
+        gap: 1rem;
+    }
+
+    .container_link {
+        width: 70%;
+        height: 40%;
+        gap: 0.8rem;
+    }
+
+    .container_link img {
+        width: 1rem;
+        height: 1.5rem;
+    }
+
+    .container_link a {
+        width: 100px;
+        height: 60px;
+        line-height: 15px;
+        font-size: 10px;
+    }
+}

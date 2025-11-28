@@ -1,0 +1,48 @@
+<nav class="navbarColor container-fluid h-100">
+
+    <div class="nav_image">
+        <a class="navbar-brand" href="#">
+        </a>
+    </div>
+    
+
+    <div class="nav_text">
+        <p>FLEXOTOM</p>
+    </div>
+    
+    
+     
+    <div class="navbarLink">
+        <ul id="menuList">
+        <% if(privilegio1 == 2 || privilegio1 == 4 || privilegio1 == 5) { %>
+            <li><a class="nav-link" href="/cadastroLote"><i class="fa-solid fa-pen-to-square icon_nav"></i>CADASTRAR LOTE</a></li>
+            <li><a class="nav-link" href="/vincularLote"><i class="fa-solid fa-chart-pie icon_nav"></i>VINCULAÇÃO DE LOTE</a></li>
+            <li><a class="nav-link link_visualizar_lote" href="/vizualizarLote"><i class="fa-solid fa-eye icon_nav link_visualizar_lote"></i>VISUALIZAR LOTE</a></li>    
+            <li><a class="nav-link" href="/logout"><i class="fa-solid fa-arrow-right-from-bracket icon_nav"></i> LOGOUT</a></li>   
+        <% } else if (privilegio1 == 3 || privilegio1 == 6  ) { %>
+            <li><a class="nav-link" href="/vincularLote"><i class="fa-solid fa-chart-pie icon_nav"></i>VINCULAÇÃO DE LOTE</a></li>
+            <li><a class="nav-link link_visualizar_lote" href="/vizualizarLote"><i class="fa-solid fa-chart-pie icon_nav link_visualizar_lote"></i>VISUALIZAR LOTE</a></li> 
+            <li><a class="nav-link" href="/logout"><i class="fa-solid fa-arrow-right-from-bracket icon_nav"></i> LOGOUT</a></li>
+        <% } %>  
+            
+        </ul>
+
+        <% if(privilegio1 > 0) { %>
+        <i class="fa-solid fa-bars icon_mobile" onclick="toggleMenu()"></i>
+        <% } %>
+    </div>
+    
+
+</nav>
+
+
+<div class="modal fade" id="message" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" id="messageDiv" role="document">
+        <div class="modal-content" id="messageDivChildren">
+            <div class="modal-body text-center">
+                <span id="messageText"></span>
+            </div>
+        </div>
+    </div>
+</div>
+

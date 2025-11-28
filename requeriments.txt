@@ -1,0 +1,364 @@
+npm init - fala tudo sobre o projeto
+/* e um servidor node */
+npm install express --save
+
+/* renderiza html */
+npm install ejs --save
+no ejs voce precisa criar uma pasta view
+
+/* habilita dados via javascript */
+npm install body-parser --save
+
+/* comunicação com o banco de dados */
+npm install --save sequelize
+npm install --save mysql2 - banco mysql
+npm install --save tedious - banco sql server 
+
+/* slug */
+npm install --save slugify
+
+/* criptografar senha*/
+npm install --save bcryptjs
+
+/*  cooking */
+npm install express-session --save
+
+/* Docker */
+docker pull mysql:8.0.34
+docker run --name coletordb -p 3306:3306 -e "MYSQL_ROOT_PASSWORD=root" -d mysql:8.0.34
+
+docker pull mcr.microsoft.com/mssql/server
+docker run -e  "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Docker123!" -p 1440:1433 -d mcr.microsoft.com/mssql/server:2022-latest 
+
+//router.post("/api/Machines/Receive", (req, res) => {
+//  const dateBody = req.body;
+//console.log(dateBody.Record);
+//res.send(dateBody);
+//});
+
+
+// tirar todas as roda de ativar produção 
+
+/* DOCKER */
+docker build -t flexotom/node1:latest .
+docker run -d --restart unless-stopped -p 3500:3500 --name flexotomsystem flexotom/node1
+
+Usuários - UsuarioAlteracaoId
+	1 - Muitos Insumos OK
+	1 - Muitas OrdemProducaoInsumos OK
+	1 - Muitas Receitas OK
+
+Acessos - AcessoId 
+	1 - um usuários Ok
+
+Insumos 
+	1 - 1 Armazenamentos
+	1 - muito OrdemProducaoParametros
+	1 - 1 ArmazenamentoEstoqueHistoricos - OK
+	1 - muito ReceitaInsumoParametro
+
+ArmazenamentoEstoqueHistoricos
+	
+Armazenamentos
+	1 - Muito ArmazenamentoEstoqueHistoricos
+	1 - Muita OrdemProducaoParametros
+	1 - Muito ArmazenamentoParametros
+
+OrdemProducaoParametros
+
+Tags
+	1 - Muito TagsComms
+	1 - Um Parâmetros
+
+	
+ArmazenamentoParametros
+
+Parâmetros
+	1 - Muito OrdemProducaoParametros
+	1 - Um ArmazenamentoParametros
+	1 - Muito ReceitaInsumoParametro 
+
+TagsComms
+	
+ReceitaInsumosParametro
+	
+OrdemProducaoInsumos
+
+Receitas 
+	1 - Muito ReceitaInsumoParametro
+
+
+###########################  *************************** ########################### 
+
+Tabelas Soltas 
+Linhas
+ReceitaParametros
+ReceitaInsumos
+OrdemProducaoConsumos
+Menus
+AcessoMenus
+OrdemProducaos
+OrdemProducaoEtapas
+
+
+#########################################################################################
+
+import  { padraoTable }  from '../../datatableJson/dataTableJs.js';
+import { preencherSelect }  from './optionSelect.js';
+import { imprimirModal } from './imprimiModal.js';
+const DatatbleJson = JSON.stringify(padraoTable);
+
+// VARIAVEIS
+var Lote = []
+var LoteTotal = []
+let optionsCarregadas = false; // Variável para controlar o carregamento das opções
+var valorSelecionadoId 
+var valorSelecionado
+var valueInputMateriaprima = document.getElementById('materiaPrimaSelecionada');
+var btnCriarLote = document.getElementById('btnCriarLote');
+var btnImprimir = document.getElementById('btn_imprimir');
+var btnModalImprimir = document.getElementById('btn_imprimir_barcode');
+var btnDeleta = document.getElementById('btn_deletar');
+var selectMateria = document.getElementById('materiaPrima');
+var inputLote = document.getElementById('materiaPrimaLote');
+
+// TABELA
+var tableCadastroLote;
+
+
+/* FUNÇÕES DE INICIOS PARA CARREGAR DADOS */
+function createTable() {
+    
+    axios.get("/cadastroLote/dadosLote").then(response => {
+        //APAGA DADOS DO ARRAY
+        Lote = []
+        LoteTotal = []
+        console.log(response)
+
+        // Configura o evento de focus uma única vez
+        $('#materiaPrima').off('focus').on('focus', function () {
+            if (!optionsCarregadas) {
+                preencherSelect("materiaPrima", response.data.insumoAtivo);
+                optionsCarregadas = true; // garante que carregue só uma vez
+            }
+        });
+
+        
+        for(let b of response.data.loteAtivo){
+            Lote.push([b.Lote, b.MateriaPrimaInsumo]);
+            LoteTotal.push( [b.Lote, b.MateriaPrimaIdInsumo, b.MateriaPrimaInsumo, b.Barcode]);
+        }
+       
+        tableCadastroLote = jQuery('#tabela-CadastroLote').DataTable(
+            {
+                pageLength : 4,
+                bLengthChange: false,
+                bFilter: true,
+                data: Lote,
+                columns: [{title: "LOTE"}, {title: "DESCRIÇÃO"}],
+                ordering: false
+            });
+        
+        
+        jQuery('#tabela-CadastroLote tbody').on('click', 'tr', function () 
+        {
+            var tr = jQuery(this).closest('tr');
+            var row = tableCadastroLote.row(tr);
+            /*Check if row is empty*/
+            if (typeof row.data() === 'undefined'){return null;}
+            /*Selected row*/
+            if (jQuery(this).hasClass('tableSelected')){
+                jQuery(this).removeClass('tableSelected');
+            }
+            else {
+                tableCadastroLote.$('tr.tableSelected').removeClass('tableSelected');
+                jQuery(this).addClass('tableSelected');
+            }   
+        });
+
+    }).catch(error => {
+        console.log(error);
+    });
+};
+
+/* FUNÇÕES DE INTERAÇÃO SELECT */
+
+selectMateria.onchange = function () {
+    var campo_select = document.getElementById("materiaPrima");
+    valorSelecionadoId = campo_select.options[campo_select.selectedIndex].value;
+    valorSelecionado = campo_select.options[campo_select.selectedIndex].text;
+    valueInputMateriaprima.placeholder = valorSelecionado;
+    //campo_select.value = ''; 
+}; 
+
+/*
+$(selectMateria).on('change', function() {
+    valorSelecionadoId = $(this).val();
+    valorSelecionado = $(this).find('option:selected').text();
+    valueInputMateriaprima.placeholder = valorSelecionado;
+});*/
+
+/* CADASTRO O LOTE NO BANCO DE DADOS */
+btnCriarLote.onclick  = function (event) {
+    event.preventDefault();
+   
+    if (inputLote.value === '' || valorSelecionadoId === '' || valorSelecionado === '') {
+        alert("Selecione uma matéria-prima ou digite o Lote.");
+        return;
+    }
+
+    axios.post("/cadastroLote/criarLote", {
+        Lote: inputLote.value,
+        materiaPrimaId: valorSelecionadoId,
+        materiaPrimaDescricao: valorSelecionado
+    }).then(response => {
+                jQuery('#messageDivChildren').css({"background":"#E5192E", "border": "2px solid #fff", "color": "#fff"});
+                jQuery('#message').modal('show');
+                jQuery('#messageText').text(response.data.message);
+                setTimeout(() => {
+                    window.location.reload(); 
+                },800);
+    }).catch(error => {
+            console.error(error);
+            const messagem = JSON.parse(error.request.responseText);
+            jQuery('#adicionar-modal').modal('hide');
+            jQuery('#messageDivChildren').css({"background":"#ffc107", "border": "2px solid #fff"});
+            jQuery('#message').modal('show');
+            jQuery('#messageText').text(messagem.erro);
+    });
+};
+
+/* CHAMA MODAL PARA MOSTRAR O BARCODE  */
+btnImprimir.onclick = function (event) {
+    event.preventDefault();
+    let selectedRow = tableCadastroLote.row('.tableSelected');
+    let id = selectedRow.data()[0];
+    let valueDoArray = LoteTotal.filter(item => item[0] === id);
+    let barCoode = valueDoArray[0][3];
+
+    jQuery('#barCodeDiv').css({
+        "width": "520px",
+        "background":"#FFFFFF;", 
+        "color": "#2f2d2d",
+        "font-size": "15px",
+    });
+    jQuery('#barCodeModal').modal('show');
+    jQuery('#mensagemBarcode').text('APROVADO');
+    JsBarcode("#idBarcode", barCoode);
+};
+
+btnModalImprimir.onclick = () => {
+    imprimirModal('barCodeModal')
+};
+
+btnDeleta.onclick = (event) => {
+    event.preventDefault();
+    let selectedRow = tableCadastroLote.row('.tableSelected');
+    let deleteLote = selectedRow.data()[0];
+
+    axios.delete(`/cadastroLote/${deleteLote}`).then(response => {
+            console.log(response.data)
+            if(response.status == 201){
+                jQuery('#messageDivChildren').css({"background":"#E5192E", "border": "2px solid #fff", "color": "#fff"});
+                jQuery('#message').modal('show');
+                jQuery('#messageText').text(response.data.message);
+                setTimeout(() => {
+                    window.location.reload(); 
+                },800);     
+            }
+        }).catch(error => {
+                const messagem = JSON.parse(error.request.responseText);
+                jQuery('#adicionar-modal').modal('hide');
+                jQuery('#messageDivChildren').css({"background":"#ffc107", "border": "2px solid #fff"});
+                jQuery('#message').modal('show');
+                jQuery('#messageText').text(messagem.erro);
+    }) 
+
+}
+
+
+/* INICIA A PAGINA */
+createTable();
+
+
+#########################################################################################
+
+function preencherSelect(valueId, dados) {
+    const $select = $(`#${valueId}`);
+    $select.empty();
+
+    // Adiciona uma opção padrão "Selecione" que não seleciona nada
+    $select.append($('<option></option>')
+        .val(''));
+
+    dados.forEach(item => {
+        const option = $('<option></option>')
+            .val(item.id)
+            .text(item.Descricao);
+        $select.append(option);
+    });
+}
+
+
+
+var a = [
+[53, 'AGUA'],
+[27, 'AGUARRAS'],
+[14, 'ALCALINIZANTE DISACOAT ALK300'],
+[26, 'ANTIESPUMANTE DISAFOAM 650E'],
+[15, 'BACTERICIDA - BP 507/BC 5051 AT/BC 5050 AT'],
+[22, 'BARICRYL E-316/ RHEOTECH 2000'],
+[70, 'BIOBAC BIT 20 (FUNGICIDA BIT 20)'],
+[19, 'BIOSIL MSK (HIDROFUGANTE) /  SILRES BS 16'],
+[32, 'BIO-WET DOS AG'],
+[25, 'BUTILGLICOL'],
+[48, 'CARBONATO DE CALCIO EXTRA LEVE/ CARBOLAG'],
+[12, 'CARBOREZ MBK 586'],
+[3, 'CARBOSE'],
+[17, 'CASCOWAX(TM) EW-58A BR/ HUMOCER CURE 60 SE'],
+[51, 'CAULIM - UNIONGLOSS SR / REFLEX MS / HTM HS'],
+[52, 'CELOSIZE QP 300/ HIDROXIETIL CELULOSE HEC H100K'],
+[20, 'CERFOBOL R/75 TB TF100H'],
+[45, 'CIAMIL MS / UNIONGLOSS F5'],
+[34, 'CMC - INDUSKOL 9000/2 RD/ BIO 90'],
+[36, 'DIOXIDO DE TITANIO RUTILO  FR 767 (LINHA PREMIUM)'],
+[37, 'DIOXIDO DE TITANIO RUTILO R996 / R2196'],
+[29, 'DISPEX AA 4146/ DISASPERS TW30/ BIOSPERSE450/ AD 5564 T'],
+[44, 'DOLOMITA # 1000 - RIO BRANCO'],
+[41, 'DOLOMITA # 200 - RIO BRANCO'],
+[42, 'DOLOMITA # 325 **ENSACADA**'],
+[39, 'DOLOMITA # 40 - RIO BRANCO'],
+[43, 'DOLOMITA # 635 - RIO BRANCO'],
+[56, 'DOLOMITA SILO #325 **GRANEL**'],
+[16, 'EMULSAO PARAFINA/ HUMOCER 100 A45 TM/ HUMOCER 100/ SWAX 450'],
+[9, 'EUROCRYL 7960'],
+[47, 'EXTENSOR TITANIO - W FILLER DL60 (AP 6000) ACETINADO SB'],
+[73, 'FIBRA SINT 6MM'],
+[31, 'FUNGICIDA - FBP 480 / BF 5056 T'],
+[67, 'FUNGICIDA E ALGICIDA - FAP 493/ BFA 5058 T'],
+[50, 'HEXAMETAFOSFATO DE SODIO'],
+[5, 'LATEX DL 2292 LA'],
+[69, 'MICROESFERA OCA DE VIDRO K1'],
+[38, 'MOCAL #14'],
+[40, 'MOCAL #40'],
+[11, 'NKX180'],
+[72, 'PIG VERDE 919 (CIM)'],
+[28, 'PLASTIFICANTE - EASTMAN SCANDINOL DOP/ OS 90'],
+[23, 'PRIMAL AP 10'],
+[18, 'PRIMAL HT300 - RHEOTECH M03 - LUMENCRYL ET'],
+[49, 'QUARTZO # 200 - MATHEUS LEME'],
+[13, 'RESINA ACR BASE AGUA - VIAWAN DR57'],
+[7, 'RESINA ACR ENCOR E-800 / ACRONAL BS 700'],
+[4, 'RESINA ACRONAL 1569'],
+[8, 'RESINA BARIFIX A-504 / EUROCRYL AM 5712'],
+[6, 'RESINA ELASTOMERICA - ENCOR R 161 N BR'],
+[10, 'RESINA ELASTOMERICA ACRONAL S400/ DENVERCRIL RA 068/ 4040'],
+[21, 'RHEOTECH 3800 / 4925'],
+[46, 'SULFATO DE BARIO'],
+[30, 'SYCO 098-BB21KG'],
+[24, 'TEXANOL BIB 1000/ NX-795'],
+[74, 'TURBOWAN DL 04'],
+[71, 'TYLOSE MH 60004 P6 SACO 25KG'],
+[33, 'UMECTANTE DISAWET 800 (BB 200KG)'],
+[35, 'UNIONG-P (BIOGEL)']
+]

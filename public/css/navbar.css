@@ -1,0 +1,124 @@
+
+html, body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #44403C;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+
+/*----------bootstrap-navbar-css------------*/
+
+.navbarColor {
+	background-color: #E5192E;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 20rem;
+}
+
+.nav_text {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.navbarColor .nav_text p{
+	font-family: "Inter", sans-serif;
+	font-style: bold;
+	font-weight: 700;
+	font-size: 1.8rem;
+	color: #F3E8FF;
+	padding: 0;
+	margin: 0.5rem 0;
+}
+
+.navbarLink {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+}
+
+.navbarLink ul {
+	display: flex;
+	flex-direction: row;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.navbarLink a {
+	display: flex;
+	align-items: center;
+	font-family: "Inter", sans-serif;
+	font-style: bold;
+	font-weight: 700;
+	font-size: 0.8rem;
+	color: #F3E8FF;
+}
+
+.icon_nav{
+	margin: 0;
+	padding: 0;
+}
+
+.navbarLink ul li {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.icon_mobile {
+	display: none;
+	font-size: 1rem;
+	color: #F3E8FF;
+}
+
+
+@media (max-width:991px) {
+    .navbarLink ul{
+        position: absolute;
+        top: 7%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        text-align: center;
+        background: #E5192E;
+        gap: 0;
+        overflow: hidden;
+		z-index: 2;
+    }
+	
+    .navbarLink  ul li{
+        padding: 20px;
+        padding-top: 0;
+    }
+
+    .icon_mobile{
+        display: block;
+    }
+ 
+}
+
+@media (max-width: 790px) {
+	a.link_visualizar_lote {
+  		display: none;
+	}
+	.link_visualizar_lote {
+		display: none;
+	}
+}	
+
+
+@media (max-width:380px) {
+    .navbarLink ul{
+        top: 10%;
+    } 
+}
