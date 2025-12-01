@@ -16,13 +16,22 @@ class cadastroLoteController {
 
     async criarLote(req, res) {
         try {
-            const { Lote, materiaPrimaId, materiaPrimaDescricao } = req.body;
+            const { 
+            id, Codigo, Descricao, Linha, Receita, QuantidadePrevista,TamanhoBatch } = req.body;
 
-            if ( !Lote || !materiaPrimaId || !materiaPrimaDescricao) {
+            if ( !id || !Codigo || !Descricao || !Linha || !Receita || !QuantidadePrevista || !TamanhoBatch ) {
                 throw new ModeloInvalidoErro("Todos os campos são obrigatórios.");
             }
 
-           const salve = await cadastroLoteService.criarLote(Lote, materiaPrimaId, materiaPrimaDescricao)
+           const salve = await cadastroLoteService.criarLote(
+            id,
+            Codigo,
+            Descricao,
+            Linha,
+            Receita,
+            QuantidadePrevista,
+            TamanhoBatch
+           )
 
 
             if(salve) {
@@ -35,23 +44,6 @@ class cadastroLoteController {
         }
     }
 
-    async deletaLoteUnico(req, res) {
-        try {
-        const deleteLoteId  = req.params.deleteLote;
-
-        if ( !deleteLoteId ) {
-                throw new ModeloInvalidoErro("campo Id Vazio.");
-        }
-
-        const deleteLote = cadastroLoteService.deletarLote(deleteLoteId)
-
-         if(deleteLote) {
-                res.status(201).json({ message: "Deletado com sucesso!" });
-            }
-        } catch (err) {
-            res.status(400).send({ erro: err.message, privilegio1: req.session.user.privilegio, acionaWarmin: false });
-        }
-    }
 }
 
 module.exports = cadastroLoteController;

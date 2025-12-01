@@ -1,6 +1,6 @@
 const {Model, DataTypes} = require("sequelize");
 
-class Acessos extends Model {
+class Lote extends Model {
     static init(connection) {
         super.init({
             IdLoteBarcode: DataTypes.STRING,
@@ -11,7 +11,7 @@ class Acessos extends Model {
             Status: DataTypes.STRING,
         },{
             sequelize: connection,
-            tableName: 'premixLote',
+            tableName: 'FlexotomPremix1',
             createdAt: 'criadoEm',
             updatedAt: 'atualizadoEm',
             timestamps: true,
@@ -22,4 +22,4 @@ class Acessos extends Model {
 
 }
 
-module.exports = Acessos;
+module.exports = Lote;

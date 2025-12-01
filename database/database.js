@@ -62,9 +62,6 @@ Object.values(models).forEach(model => {
 });
 
 
-
-
-
 module.exports = {
   connection,
   models
