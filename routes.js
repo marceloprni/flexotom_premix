@@ -46,7 +46,9 @@ router.get("/cadastroLote", adminAuth, (req, res) => {
 }); 
 
 router.get("/cadastroLote/dadosLote", adminAuth, cadastroLoteController.dadosLote);
+router.get("/cadastroLote/gerarTabela/:ID", adminAuth, cadastroLoteController.gerarTabela);
 router.post("/cadastroLote/criarLote", adminAuth, cadastroLoteController.criarLote);
+
 
 /***************** VINCULAÇÃO DE LOTE *****************/
 

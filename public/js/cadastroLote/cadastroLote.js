@@ -1,4 +1,5 @@
 import  { padraoTable }  from '../../datatableJson/dataTableJs.js';
+import { criarTabelaCadastroLote } from './tablePrincipal.js'
 import { preencherSelect, formatText }  from './optionSelect.js';
 import { imprimirModal } from './imprimiModal.js';
 const DatatbleJson = JSON.stringify(padraoTable);
@@ -10,7 +11,6 @@ var btnImprimir = document.getElementById('btn_imprimir');
 var btnModalImprimir = document.getElementById('btn_imprimir_barcode');
 var btnCriarTabela = document.getElementById('btn_gerarTabela');
 
-var btnModalDeletar = document.getElementById('btnDeletar')
 
 // VARIAVEIS
 //var valueInputMateriaprima = document.getElementById('materiaPrimaSelecionada');
@@ -18,11 +18,14 @@ var btnModalDeletar = document.getElementById('btnDeletar')
 var Lote = []
 var LoteTotal = []
 var OrdemProducao = []
+var TabelaBarCode = []
 var valorSelecionadoId 
 var valorSelecionado
 
 // TABELA
-var tableCadastroLote;
+var tableCadastroLote
+
+
 
 
 /* FUNÇÕES DE INICIOS PARA CARREGAR DADOS */
@@ -50,40 +53,6 @@ function createTable() {
         // APAGADO OS DADOS SELECIONADO
         $(selectMateria).val(null).trigger('change');       
 
-        console.log(LoteTotal)
-
-        tableCadastroLote = jQuery('#tabela-CadastroLote').DataTable(
-            {
-                pagingType: 'numbers',
-                pageLength : 5,
-                bLengthChange: false,
-                lengthChange: false, 
-                bFilter: true,
-                data: [[1, 20, 30]], //Lote,
-                columns: [{title: "ID BARCODE"}, {title: "BATELADA"}, {title: "SEQUENCIA"}],
-                ordering: false,
-                 language: {
-                    info: " " 
-                }
-            });
-        
-        
-        jQuery('#tabela-CadastroLote tbody').on('click', 'tr', function () 
-        {
-            var tr = jQuery(this).closest('tr');
-            var row = tableCadastroLote.row(tr);
-            /*Check if row is empty*/
-            if (typeof row.data() === 'undefined'){return null;}
-            /*Selected row*/
-            if (jQuery(this).hasClass('tableSelected')){
-                jQuery(this).removeClass('tableSelected');
-            }
-            else {
-                tableCadastroLote.$('tr.tableSelected').removeClass('tableSelected');
-                jQuery(this).addClass('tableSelected');
-            }   
-        });
-
     }).catch(error => {
         console.log(error);
     });
@@ -97,47 +66,39 @@ $(selectMateria).on("select2:select", function(e) {
 
 btnCriarTabela.onclick = function (event) {
     event.preventDefault();
-
-    axios.get("/cadastroLote/gerarTabela").then(response => {
     
 
-        tableCadastroLote = jQuery('#tabela-CadastroLote').DataTable(
-            {
-                pagingType: 'numbers',
-                pageLength : 5,
-                bLengthChange: false,
-                lengthChange: false, 
-                bFilter: true,
-                data: [[1, 20, 30]], //Lote,
-                columns: [{title: "ID BARCODE"}, {title: "BATELADA"}, {title: "SEQUENCIA"}],
-                ordering: false,
-                 language: {
-                    info: " " 
-                }
-            });
+    if (
+        valorSelecionadoId === '' 
+        || valorSelecionadoId === undefined 
+        ) {
+        alert("Selecione uma matéria-prima.");
+        return;
+    }
+
+    axios.get(`/cadastroLote/gerarTabela/${valorSelecionadoId}`, {
+    }).then(response => {
+        console.log(response)
+        TabelaBarCode = []
+
+        for(let a of response.data.OrdemProducao) {
+            TabelaBarCode.push([a.IdLoteBarcode, a.Batelada, a.Sequencia]);
+        }
+
+       tableCadastroLote = criarTabelaCadastroLote(TabelaBarCode);
+
         
-        
-        jQuery('#tabela-CadastroLote tbody').on('click', 'tr', function () 
-        {
-            var tr = jQuery(this).closest('tr');
-            var row = tableCadastroLote.row(tr);
-            /*Check if row is empty*/
-            if (typeof row.data() === 'undefined'){return null;}
-            /*Selected row*/
-            if (jQuery(this).hasClass('tableSelected')){
-                jQuery(this).removeClass('tableSelected');
-            }
-            else {
-                tableCadastroLote.$('tr.tableSelected').removeClass('tableSelected');
-                jQuery(this).addClass('tableSelected');
-            }   
-        });
 
     }).catch(error => {
-        console.log(error);
+        console.error(error);
+        tableCadastroLote = criarTabelaCadastroLote([]);
+        const messagem = JSON.parse(error.request.responseText);
+        jQuery('#adicionar-modal').modal('hide');
+        jQuery('#messageDivChildren').css({"background":"#ffc107", "border": "2px solid #fff"});
+        jQuery('#message').modal('show');
+        jQuery('#messageText').text(messagem.erro);
     });
 }
-
 
 /* CADASTRO O LOTE NO BANCO DE DADOS */
 btnCriarLote.onclick  = function (event) {
@@ -162,30 +123,31 @@ btnCriarLote.onclick  = function (event) {
 
     console.log(arrayLoteTotal)
    
-    //axios.post("/cadastroLote/criarLote", {
-    //    id: arrayLoteTotal[0][0],
-    //    Codigo: arrayLoteTotal[0][1],
-    //    Descricao: arrayLoteTotal[0][2],
-    //    Linha: arrayLoteTotal[0][3],
-    //    Receita: arrayLoteTotal[0][4],
-    //      QuantidadePrevista: arrayLoteTotal[0][5],  
-    //    TamanhoBatch: arrayLoteTotal[0][6]
-    //}).then(response => {
-    //            jQuery('#messageDivChildren').css({"background":"#E5192E", "border": "2px solid #fff", "color": "#fff"});
-    //            jQuery('#message').modal('show');
-    //            jQuery('#messageText').text(response.data.message);
-    //            setTimeout(() => {
-                   //window.location.reload(); 
-    //                jQuery('#adicionar-modal').modal('hide');
-    //            },800);
-    //}).catch(error => {
-    //        console.error(error);
-    //        const messagem = JSON.parse(error.request.responseText);
-    //        jQuery('#adicionar-modal').modal('hide');
-    //        jQuery('#messageDivChildren').css({"background":"#ffc107", "border": "2px solid #fff"});
-    //        jQuery('#message').modal('show');
-    //        jQuery('#messageText').text(messagem.erro);
-    //});
+    axios.post("/cadastroLote/criarLote", {
+        id: arrayLoteTotal[0][0],
+        Codigo: arrayLoteTotal[0][1],
+        Descricao: arrayLoteTotal[0][2],
+        Linha: arrayLoteTotal[0][3],
+        Receita: arrayLoteTotal[0][4],
+        QuantidadePrevista: arrayLoteTotal[0][5],  
+        TamanhoBatch: arrayLoteTotal[0][6]
+    }).then(response => {
+                console.log(response);
+                jQuery('#messageDivChildren').css({"background":"#E5192E", "border": "2px solid #fff", "color": "#fff"});
+                jQuery('#message').modal('show');
+                jQuery('#messageText').text(response.data.message);
+                setTimeout(() => {
+                    //window.location.reload(); 
+                    jQuery('#adicionar-modal').modal('hide');
+                },800);
+    }).catch(error => {
+            console.error(error);
+            const messagem = JSON.parse(error.request.responseText);
+            jQuery('#adicionar-modal').modal('hide');
+            jQuery('#messageDivChildren').css({"background":"#ffc107", "border": "2px solid #fff"});
+            jQuery('#message').modal('show');
+            jQuery('#messageText').text(messagem.erro);
+    });
 };
 
 /* CHAMA MODAL PARA MOSTRAR O BARCODE */
@@ -193,21 +155,22 @@ btnImprimir.onclick = function (event) {
     event.preventDefault();
     let selectedRow = tableCadastroLote.row('.tableSelected');
     let id = selectedRow.data()[0];
-    let valueDoArray = LoteTotal.filter(item => item[0] === id);
-    //let barCoode = valueDoArray[0][3];
+    let valueDoArray = TabelaBarCode.filter(item => item[0] === id);
+    let barCoode = valueDoArray[0][0];
+    let idBarcode = barCoode.split("-");
     console.log(id);
     console.log(valueDoArray);
-    //console.log(barCoode);
+    console.log(barCoode);
 
-    //jQuery('#barCodeDiv').css({
-    //    "width": "520px",
-    //    "background":"#FFFFFF;", 
-    //    "color": "#2f2d2d",
-    //    "font-size": "15px",
-    //});
-    //jQuery('#barCodeModal').modal('show');
-    //jQuery('#mensagemBarcode').text('APROVADO');
-    //JsBarcode("#idBarcode", barCoode);
+    jQuery('#barCodeDiv').css({
+        "width": "520px",
+        "background":"#FFFFFF;", 
+        "color": "#2f2d2d",
+        "font-size": "15px",
+    });
+    jQuery('#barCodeModal').modal('show');
+    jQuery('#mensagemBarcode').text(idBarcode[0]);
+    JsBarcode("#idBarcode", barCoode);
 };
 
 btnModalImprimir.onclick = () => {
@@ -219,3 +182,4 @@ btnModalImprimir.onclick = () => {
 
 /* INICIA A PAGINA */
 createTable();
+criarTabelaCadastroLote();

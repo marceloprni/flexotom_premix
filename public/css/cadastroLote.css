@@ -112,6 +112,10 @@
     color: #2f2d2d;
 }
 
+#barCodeDiv img{
+    display: block;
+}
+
 #tabela-CadastroLote thead th {
     border-top: none;
 }
@@ -134,11 +138,23 @@
 }
 
 
-@media(max-width: 1200px) {
+@media(max-width: 1324px) {
 
     .group_seleciona_materia {
         width: 25rem;
     }
+
+   .selectPrima {
+       width: 22.44rem;
+   }
+
+   div.dataTables_wrapper div.dataTables_filter input {
+        margin-left: 0.5em;
+        display: inline-block;
+        width: 10rem;
+    }
+
+    
 }
 
 
@@ -206,7 +222,6 @@
         margin: 0;
     }
     
-
     .selectPrima,
     .inputPrima {
         height: 1.5rem;

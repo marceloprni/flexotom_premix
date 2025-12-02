@@ -34,40 +34,91 @@ async function dadosParaPage() {
 }
 
 async function criarLote(
-            idLoteProd,
-            Codigo,
-            Descricao,
-            Linha,
-            QuantidadePrevista,
+            id, 
+            Codigo, 
+            Descricao, 
+            Linha, 
+            Receita, 
+            QuantidadePrevista, 
             TamanhoBatch) {
-    const statusValue = 'FALSE';
-            
-    const geradorId = gerarUUID(idLoteProd,
+
+    const loteExistente = await Lote.findOne({
+        attributes: ['IdOrdem'],
+        where: {
+            IdOrdem: id
+        }
+    });  
+
+
+    if(loteExistente == null || loteExistente == undefined) {
+
+        const geradorId = gerarUUID(id,
             Codigo,
             Descricao,
             Linha,
+            Receita,
             QuantidadePrevista,
             TamanhoBatch);
-    
 
-    if (!materiaPrimaId || !materiaPrima) {
-        throw new ModeloInvalidoErro("Todos os campos são obrigatórios.");
+    
+        const loteCraido = geradorId.map(async lote => {
+            console.log('lote criado');
+            await Lote.create({
+                IdLoteBarcode: lote.idLoteBarcode,
+                Batelada: lote.Batelada,
+                IdOrdem: lote.idOrdem,
+                IdProduto: lote.idProduto,
+                Sequencia: lote.Sequencia,
+                Status: lote.Status
+            }); 
+        
+        }); 
+        
+        if (loteCraido) {
+                        
+            return  {
+                value:"Lote criado com sucesso!"
+            }
+        }
+        
+    } else {
+
+        return {
+                value: "Já existe lote com essa ordem."
+            } 
     }
-
-    //const salve = await Lote.create({
-    //    idLoteBarcode: ,
-    //    Batelada: ,
-    //    idOrdem: ,
-    //    idProduto: ,
-    //    Sequencia: ,
-    //    Status: 
-    //});
     
-    return salve
+        
+    
 }
 
+async function gerarTabela(id) {
+
+    let ordemProducao = await Lote.findAll({
+          order: [
+              ['id', 'ASC']
+          ],
+          where: {
+              [Op.and]: [{ IdOrdem: id }, { Status: 0 }],
+          },
+    });
+
+
+    if(!ordemProducao ) {
+        return {
+          ordemProducao: [],
+          
+        };
+    } else {
+        return {
+            OrdemProducao: ordemProducao
+        };
+    }
+
+}
 
 module.exports =  {
     dadosParaPage,
-    criarLote
+    criarLote,
+    gerarTabela
 }
