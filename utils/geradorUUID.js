@@ -25,7 +25,7 @@ function gerarUUID(
         
         
          const lote = {
-             idLoteBarcode: `${Codigo}-${i + 1}-${id}`,
+             idLoteBarcode: `${Codigo}-${i + 1}-${numeroDeBateladas}`,
              Batelada: TamanhoBatch,
              idOrdem: id,
              idProduto: Receita,

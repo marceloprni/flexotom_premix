@@ -8,7 +8,7 @@ const { Op, Sequelize, QueryTypes} = require("sequelize");
 async function dadosParaPage() {
 
     let ordemProducao = await OrdemProducao.findAll({
-          attributes: ['id', 'Codigo', 'QuantidadePrevista', 'Linha', 'BatchsProduzidos', 'TamanhoBatch','Descricao', 'Receita'],
+          attributes: ['id', 'Codigo', 'QuantidadePrevista', 'Linha', 'BatchsProduzidos', 'TamanhoBatch','Descricao', 'Receita', 'Lote'],
           order: [
               ['id', 'ASC']
           ],
@@ -75,14 +75,12 @@ async function criarLote(
         }); 
         
         if (loteCraido) {
-                        
             return  {
                 value:"Lote criado com sucesso!"
             }
         }
         
     } else {
-
         return {
                 value: "Já existe lote com essa ordem."
             } 
@@ -106,8 +104,7 @@ async function gerarTabela(id) {
 
     if(!ordemProducao ) {
         return {
-          ordemProducao: [],
-          
+          ordemProducao: [],   
         };
     } else {
         return {
