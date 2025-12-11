@@ -4,12 +4,12 @@ const router = express.Router();
 const { adminAuth, usuarioAuth } = require("./middlewares/adminAuth");
 const UsuarioController = require("./controller/usuarioController");
 const CadastroLoteController = require("./controller/cadastroLoteController");
-const VincularLoteController = require("./controller/vincularLoteController");
+const HabilitaProducaoController = require("./controller/habilitaProducaoController");
 const VisualizarLoteController = require("./controller/visualizarLoteController");
 
 const usuarioController = new UsuarioController();
 const cadastroLoteController = new CadastroLoteController();
-const vincularLoteController = new VincularLoteController();
+const habilitaProducaoController = new HabilitaProducaoController();
 const visualizarLoteController = new VisualizarLoteController();
 
 router.use(session({
@@ -52,18 +52,18 @@ router.post("/cadastroLote/criarLote", adminAuth, cadastroLoteController.criarLo
 
 /***************** VINCULAÇÃO DE LOTE *****************/
 
-router.get("/vincularLote", usuarioAuth, (req, res) => {
-  res.render("vinculacaoLote/vinculacaoLote", {
+router.get("/habProdLote", usuarioAuth, (req, res) => {
+  res.render("habilitaProducao/habilitaProducao", {
       privilegio1: req.session.user.privilegio,
       erro: " ",
       acionaWarmin: false
   });
 }); 
 
-router.get("/vincularLote/dadosLote", usuarioAuth, vincularLoteController.dadosLoteVinculo);
-router.get("/vincularLote/:barcode", usuarioAuth, vincularLoteController.barcodeVinculo);
-router.post("/vincularLote/:vincularLote", usuarioAuth, vincularLoteController.criarVinculoLote);
-router.delete("/vincularLote/:vincularDeleteLote", usuarioAuth, vincularLoteController.deletarLoteVinculo);
+//router.get("/vincularLote/dadosLote", usuarioAuth, vincularLoteController.dadosLoteVinculo);
+//router.get("/vincularLote/:barcode", usuarioAuth, vincularLoteController.barcodeVinculo);
+//router.post("/vincularLote/:vincularLote", usuarioAuth, vincularLoteController.criarVinculoLote);
+//router.delete("/vincularLote/:vincularDeleteLote", usuarioAuth, vincularLoteController.deletarLoteVinculo);
 
 /***************** VISUALIZAÇÃO DE LOTE *****************/
 router.get("/vizualizarLote", usuarioAuth, (req, res) => {
