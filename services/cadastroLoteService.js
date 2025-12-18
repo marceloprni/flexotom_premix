@@ -14,10 +14,9 @@ async function dadosParaPage() {
           ],
           where: {
               Linha: 2,
-              [Op.or]: [{ Status: 'A' }, { Status: 'P' }],
+              [Op.or]: [{ Status: 'A' }, { Status: 'P' }, { Status: 'F' } ],
           },
     });
-
 
     if(!ordemProducao ) {
         return {

@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
   $('.vinculacaoLote').click(function() {
-    window.location.href = '/vincularLote'; 
+    window.location.href = '/habProdLote'; 
   });
 });
 

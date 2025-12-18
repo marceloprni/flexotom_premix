@@ -1,0 +1,105 @@
+
+.main_habilitaProducao {
+    justify-content: center;
+}
+
+.btn_criar_vinculaLote {
+    height: 3rem;
+}
+
+#tabela-VincularLote thead th {
+    border-top: none;
+}
+
+#tabela-VincularLote_wrapper {
+    padding: 0.3rem;
+}
+
+.table_vincular_principal .dataTables_wrapper .row {
+    margin: 0;
+}
+
+#barCodeDiv {
+    border-radius: 1rem; 
+}
+
+.geral_modal_vincular {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    width: 100%;
+    color: #44403C;
+    background-color: #D9D9D9;   
+    border-radius: 1rem; 
+    gap: 2rem;
+}
+
+.geral_modal_vincular h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+    height: 3rem;
+    border-radius: 1rem 1rem 0 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.geral_modal_vincular div label {
+    color: #44403C;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.geral_modal_vincular button {
+    align-items: center;
+}
+
+.input_modal_vincula {
+    width: 25rem;
+    height: 3rem;
+}
+
+.btn_vincular_lote {
+    display: flex;
+    justify-content: center;
+    width: 25rem;
+    height: 3rem;
+    background-color: #028F76;
+    color: #FFFFFF;
+    margin-bottom: 0.7rem;
+    border-radius: 0.8rem;
+}
+
+.btn_vincular_lote:hover {
+    background-color: oklch(84.5% 0.143 164.978);
+}
+
+
+
+@media(max-width: 580px) { 
+    #barCodeDiv {
+        width: 18.62rem;
+    }
+
+    .geral_modal_vincular {
+        width: 18.62rem;
+    }
+
+    .input_modal_vincula {
+        width: 17.5rem;
+    }
+
+    .btn_vincular_lote {
+        width: 17.5rem;
+    }
+
+    #barCodeDivPrincipal {
+        justify-content: center;
+    }
+}

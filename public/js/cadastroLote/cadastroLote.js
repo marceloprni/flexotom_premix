@@ -82,7 +82,7 @@ btnCriarTabela.onclick = function (event) {
         TabelaBarCode = []
 
         for(let a of response.data.OrdemProducao) {
-            TabelaBarCode.push([a.IdLoteBarcode, a.Batelada, a.Sequencia]);
+            TabelaBarCode.push([a.IdOrdem, a.IdLoteBarcode, a.Batelada, a.Sequencia]);
         }
 
        tableCadastroLote = criarTabelaCadastroLote(TabelaBarCode);
@@ -154,10 +154,13 @@ btnCriarLote.onclick  = function (event) {
 btnImprimir.onclick = function (event) {
     event.preventDefault();
     let selectedRow = tableCadastroLote.row('.tableSelected');
-    let id = selectedRow.data()[0];
-    let valueDoArray = TabelaBarCode.filter(item => item[0] === id);
-    let barCoode = valueDoArray[0][0];
+    let id = selectedRow.data()[1];
+   
+    let valueDoArray = TabelaBarCode.filter(item => item[1] === id);
+    
+    let barCoode = valueDoArray[0][1];
     let idBarcode = barCoode.split("-");
+    
     let loteArrat = LoteTotal.filter(item => item[1] == idBarcode[0]);
 
     jQuery('#barCodeDiv').css({
@@ -167,6 +170,9 @@ btnImprimir.onclick = function (event) {
         "font-size": "15px",
     });
 
+    
+    
+    
     jQuery('#barCodeModal').modal('show');
     jQuery('#mensagemBarcode').text(`${idBarcode[0]}-${loteArrat[0][7]}`);
     JsBarcode("#idBarcode", barCoode);

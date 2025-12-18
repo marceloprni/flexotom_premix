@@ -18,7 +18,7 @@ function criarTabelaCadastroLote(dadosArray) {
     lengthChange: false,
     bFilter: true,
     data: dadosArray,
-    columns: [{title: "ID BARCODE"}, {title: "BATELADA"}, {title: "SEQUENCIA"}],
+    columns: [{title: "ID"}, {title: "ID BARCODE"}, {title: "BATELADA"}, {title: "SEQUENCIA"}],
     ordering: false,
     language: { info: " " }
   });

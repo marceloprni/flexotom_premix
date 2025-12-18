@@ -9,6 +9,8 @@ class Lote extends Model {
             IdProduto: DataTypes.STRING,
             Sequencia: DataTypes.INTEGER,
             Status: DataTypes.STRING,
+            ordemArgamassa: DataTypes.STRING,
+            idOrdemArgamassa: DataTypes.INTEGER,
         },{
             sequelize: connection,
             tableName: 'FlexotomPremix1',

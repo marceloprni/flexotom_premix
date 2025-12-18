@@ -50,7 +50,7 @@ router.get("/cadastroLote/gerarTabela/:ID", adminAuth, cadastroLoteController.ge
 router.post("/cadastroLote/criarLote", adminAuth, cadastroLoteController.criarLote);
 
 
-/***************** VINCULAÇÃO DE LOTE *****************/
+/***************** HABILITA PRODUCAO *****************/
 
 router.get("/habProdLote", usuarioAuth, (req, res) => {
   res.render("habilitaProducao/habilitaProducao", {
@@ -60,10 +60,10 @@ router.get("/habProdLote", usuarioAuth, (req, res) => {
   });
 }); 
 
-//router.get("/vincularLote/dadosLote", usuarioAuth, vincularLoteController.dadosLoteVinculo);
-//router.get("/vincularLote/:barcode", usuarioAuth, vincularLoteController.barcodeVinculo);
-//router.post("/vincularLote/:vincularLote", usuarioAuth, vincularLoteController.criarVinculoLote);
-//router.delete("/vincularLote/:vincularDeleteLote", usuarioAuth, vincularLoteController.deletarLoteVinculo);
+
+router.get("/habilitaProducao/gerarPop/:ID", usuarioAuth, habilitaProducaoController.verifyDados);
+router.put("/habilitaProducao/habilitaProduto", usuarioAuth, habilitaProducaoController.habilitaProduto);
+
 
 /***************** VISUALIZAÇÃO DE LOTE *****************/
 router.get("/vizualizarLote", usuarioAuth, (req, res) => {

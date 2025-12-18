@@ -17,7 +17,6 @@ class cadastroLoteController {
 
     async gerarTabela(req, res) {
         try {
-            console.log(req.params);
             const { ID } = req.params;
 
             console.log('ID recebido no controller:');

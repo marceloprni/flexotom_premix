@@ -1,0 +1,50 @@
+<%- include ('../partials/header.ejs'); -%>
+<%- include ('../partials/navbar.ejs'); -%>
+
+
+<main class="container_main main_habilitaProducao">
+    <section class="container_section_first">
+        <div class="group_seleciona_materia group_seleciona_vinculaLote">
+            
+            <div class="form-group group_input_parametros">
+                <label for="">LEITURA DO CODIGO DE BARRA</label>
+                <input type="text" class="form-control inputPrima" id="buscarLoteInput" placeholder="">
+            </div>
+
+            <button class="btn_criar btn_criar_vinculaLote" id="btnBuscarLote">BUSCAR PRODUTO</button>
+        </div>
+    </section>
+</main>
+
+<div class="modal fade justify-content-center align-items-center align-self-center" id="barCodeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" id="barCodeDivPrincipal" role="document">
+        <div class="modal-content modal_global_vincula" id="barCodeDiv">
+            <section class="geral_modal_vincular">
+                    <H3>HABILITA PRODUÇÃO</H3>
+                    <div class="form-group group_input_parametros">
+                        <label for="">ORDEM PD ARGAMASSA</label>
+                        <input type="text" class="form-control input_modal_vincula" id="OrdemProdinput" placeholder="" readonly>
+                    </div>
+
+                    <div class="form-group group_input_parametros">
+                        <label for="">MATERIA PRIMA PREMIX</label>
+                        <input type="text" class="form-control input_modal_vincula" id="MateriaInput" placeholder="" readonly>
+                    </div>
+
+                    <div class="form-group group_input_parametros">
+                        <label for="">LOTE  ARGAMASSA</label>
+                        <input type="text" class="form-control input_modal_vincula" id="LoteInput" placeholder="" readonly>
+                    </div>
+                    
+                    <div class="form-group group_input_parametros">
+                        <button class="btn_vincular_lote" id="btnVinculaLoteFinal">INICIAR PREMIX</button>
+                    </div>
+            </section>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<%- include ('../partials/footer.ejs'); -%>
+<script type="module" src="/js/habilitaProducao/habilitaProducao.js"></script>
