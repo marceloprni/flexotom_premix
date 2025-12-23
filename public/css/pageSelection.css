@@ -100,12 +100,13 @@ text-decoration: none;
         flex-direction: column;
         gap: 3rem;
         width: 50%;
-        height: 50rem;
+        height: auto;
     }
 
     .container_link {
+        padding: 1rem;
         width: 50%;
-        height: 20%;
+        height: 50%;
     }
 
     .container_link img {
@@ -119,10 +120,9 @@ text-decoration: none;
 
 }
 
+
 @media(max-width: 995px) {
-    .container_principal {
-        height: 80vh;
-    }
+   
 
     .container_principal section {
         flex-direction: column;
@@ -132,7 +132,8 @@ text-decoration: none;
     }
 
     .container_link {
-        width: 60%;
+        padding: 1rem;
+       
         height: 30%;
     }
 
@@ -151,14 +152,12 @@ text-decoration: none;
     .visualizar_lote_pageselect {
         display: none;
     }
-}
-
+} 
 
 @media(max-width: 480px) {
 
 
-}
-
+} 
 
 @media(max-width: 380px) {
     .container_principal {
@@ -187,4 +186,4 @@ text-decoration: none;
         line-height: 15px;
         font-size: 10px;
     }
-}
+} 
