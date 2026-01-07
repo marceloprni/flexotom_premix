@@ -87,6 +87,14 @@
         width: 18.62rem;
     }
 
+    .geral_modal_vincular h3 {
+        font-size: 1rem;
+    }
+
+    .geral_modal_vincular .modal_div_geral label {
+        font-size: 1rem;
+    }
+
     .geral_modal_vincular {
         width: 18.62rem;
     }

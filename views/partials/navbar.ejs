@@ -16,12 +16,11 @@
         <ul id="menuList">
         <% if(privilegio1 == 2 || privilegio1 == 4 || privilegio1 == 5) { %>
             <li><a class="nav-link" href="/cadastroLote"><i class="fa-solid fa-pen-to-square icon_nav"></i>GERAR ETIQUETA</a></li>
-            <li><a class="nav-link" href="/habProdLote"><i class="fa-solid fa-chart-pie icon_nav"></i>HABILITA PRODUÇÃO</a></li>
-            <li><a class="nav-link link_visualizar_lote" href="/vizualizarLote"><i class="fa-solid fa-eye icon_nav link_visualizar_lote"></i>VISUALIZAR LOTE</a></li>    
+            <li><a class="nav-link" href="/habProdLote"><i class="fa-solid fa-chart-pie icon_nav"></i>HABILITA PRODUÇÃO</a></li>   
             <li><a class="nav-link" href="/logout"><i class="fa-solid fa-arrow-right-from-bracket icon_nav"></i> LOGOUT</a></li>   
         <% } else if (privilegio1 == 3 || privilegio1 == 6  ) { %>
-            <li><a class="nav-link" href="/vincularLote"><i class="fa-solid fa-chart-pie icon_nav"></i>VINCULAÇÃO DE LOTE</a></li>
-            <li><a class="nav-link link_visualizar_lote" href="/vizualizarLote"><i class="fa-solid fa-chart-pie icon_nav link_visualizar_lote"></i>VISUALIZAR LOTE</a></li> 
+            <li><a class="nav-link" href="/cadastroLote"><i class="fa-solid fa-pen-to-square icon_nav"></i>GERAR ETIQUETA</a></li>
+            <li><a class="nav-link" href="/habProdLote"><i class="fa-solid fa-chart-pie icon_nav"></i>HABILITA PRODUÇÃO</a></li>
             <li><a class="nav-link" href="/logout"><i class="fa-solid fa-arrow-right-from-bracket icon_nav"></i> LOGOUT</a></li>
         <% } %>  
             

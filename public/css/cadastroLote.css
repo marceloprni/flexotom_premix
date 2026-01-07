@@ -287,8 +287,9 @@
     }
 }
 
-/*
-@media(max-width: 380px) {
+
+@media(max-width: 435px) {
+
 
     .group_seleciona_materia {
         width: 15rem;
@@ -298,6 +299,10 @@
 
     .group_seleciona_materia label {
         font-size: 1rem;
+    }
+
+    .selectPrima {
+        width: 12.43rem;
     }
 
 
@@ -337,4 +342,4 @@
         width: 150px;
     }
 
-}*/
+}
