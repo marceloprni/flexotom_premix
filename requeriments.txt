@@ -40,8 +40,8 @@ docker run -e  "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Docker123!" -p 1440:1433 -d
 // tirar todas as roda de ativar produção 
 
 /* DOCKER */
-docker build -t flexotom/node1:latest .
-docker run -d --restart unless-stopped -p 3500:3500 --name flexotomsystem flexotom/node1
+docker build -t flexotompremix/node1:v1 .
+docker run -d --restart unless-stopped -p 3500:3500 --name flexotomsystem flexotompremix/node1
 
 Usuários - UsuarioAlteracaoId
 	1 - Muitos Insumos OK

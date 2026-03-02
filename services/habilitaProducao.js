@@ -23,7 +23,7 @@ async function habilitaProducao(status, ordeArgamassa, idOrdemArgamassaId, ordem
            throw new Error()
 
        } else {  
-            
+            // CONEXÃO COM O PLC
             await PLC.connect("192.168.0.16", 0);
     
             //console.log(PLC.properties);
