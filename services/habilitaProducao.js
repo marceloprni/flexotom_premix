@@ -27,32 +27,46 @@ async function habilitaProducao(status, ordeArgamassa, idOrdemArgamassaId, ordem
             await PLC.connect("192.168.0.16", 0);
     
             //console.log(PLC.properties);
-            //await PLC.readTag(TagConst);
+            const httpPremix = await PLC.readTag(TagConst);
 
-            await PLC.writeTag(TagConst, Number(idPremix));
+            if(httpPremix.value = 0){
+                await PLC.writeTag(TagConst, Number(idPremix));
 
-            await Lote.update(
-                { 
-                    Status: status ,
-                    ordemArgamassa: ordeArgamassa ,
-                    idOrdemArgamassa: idOrdemArgamassaId
-                },
-                {
-                  where: {
-                    id: idPremixLote,
-                  },
-                },
-            );
-           
-            return {
-                message: 'Produto utilizado e ordem enviada para o controlador.'
-            }
+                await Lote.update(
+                    { 
+                        Status: status ,
+                        ordemArgamassa: ordeArgamassa ,
+                        idOrdemArgamassa: idOrdemArgamassaId
+                    },
+                    {
+                      where: {
+                        id: idPremixLote,
+                      },
+                    },
+                );
+
+                 return {
+                    message: 'Produto utilizado e ordem enviada para o controlador.'
+                }
+            } else {
+                erroValue = 2;
+                throw new Error()
+            } 
        }
 
         
     } catch (error) {
 
-            messageErro = erroValue == 1 ? "Produto utilizado já, por favor usar outro." : "Erro comunicação plc ou Erro no Banco de dados.";
+            switch(erroValue) {
+                case 1:
+                    messageErro = "Produto utilizado já, por favor usar outro.";
+                    break;
+                case 2:
+                    messageErro = "Produto ainda está na balança, aguardar a proxima batch.";
+                    break;
+                default:
+                    messageErro = "Erro comunicação plc ou Erro no Banco de dados.";
+            }
             throw new ModeloInvalidoErro(400, messageErro);
 
     } finally {
