@@ -82,7 +82,7 @@ btnCriarTabela.onclick = function (event) {
         TabelaBarCode = []
 
         for(let a of response.data.OrdemProducao) {
-            TabelaBarCode.push([a.IdOrdem, a.IdLoteBarcode, a.Batelada, a.Sequencia]);
+            TabelaBarCode.push([a.idReceita, a.IdLoteBarcode, a.Batelada, a.Sequencia]);
         }
 
        tableCadastroLote = criarTabelaCadastroLote(TabelaBarCode);

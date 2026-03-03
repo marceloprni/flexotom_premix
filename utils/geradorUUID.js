@@ -14,7 +14,8 @@ function gerarUUID(
    Linha, 
    Receita, 
    QuantidadePrevista, 
-   TamanhoBatch
+   TamanhoBatch,
+   idReceitaProducao
 ) {
    lotes = [];
    
@@ -25,12 +26,13 @@ function gerarUUID(
         
         
          const lote = {
-             idLoteBarcode: `${Codigo}-${i + 1}-${numeroDeBateladas}`,
-             Batelada: TamanhoBatch,
-             idOrdem: id,
-             idProduto: Receita,
-             Sequencia: i + 1,
-             Status: false,
+             idLoteBarcodePremix: `${Codigo}-${i + 1}-${numeroDeBateladas}`,
+             BateladaPremix: TamanhoBatch,
+             idOrdemPremix: id,
+             idProdutoPremix: Receita,
+             SequenciaPremix: i + 1,
+             StatusPremix: false,
+             idReceitaPremix: idReceitaProducao
          };
 
          lotes.push(lote);

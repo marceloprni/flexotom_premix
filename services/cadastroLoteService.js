@@ -1,5 +1,6 @@
 const Lote = require("../models1/Lote/Lote");
 const OrdemProducao = require("../models/OrdemProducaos/OrdemProducaos");
+const Receitas = require("../models/Receitas/Receitas");
 const gerarUUID = require("../utils/geradorUUID");
 const {ModeloInvalidoErro, NaoAutorizadoErro } = require("../erros/typeErros");
 const { Op, Sequelize, QueryTypes} = require("sequelize");
@@ -48,8 +49,34 @@ async function criarLote(
         }
     });  
 
+    const ordemProducao = await OrdemProducao.findOne({
+        attributes: ['Receita'],
+        where: {
+            id: id
+        }
+    });
 
+    // CHAMA O CODIGO DA RECEITA
+    const receita = await Receitas.findOne({
+        attributes: ['Codigo'],
+        where: {
+            id: ordemProducao.Receita
+        }
+    });
+
+    console.log('lote existente:');
+    console.log(id, 
+            Codigo, 
+            Descricao, 
+            Linha, 
+            Receita, 
+            QuantidadePrevista, 
+            TamanhoBatch);
+    
     if(loteExistente == null || loteExistente == undefined) {
+        
+        // CODIGO RECEITA
+        const receitaCodigo = String(receita.Codigo);
 
         const geradorId = gerarUUID(id,
             Codigo,
@@ -57,19 +84,24 @@ async function criarLote(
             Linha,
             Receita,
             QuantidadePrevista,
-            TamanhoBatch);
+            TamanhoBatch,
+            receitaCodigo);
+        ;
+        
 
-    
+
+
         const loteCraido = geradorId.map(async lote => {
-            console.log('lote criado');
+           
             await Lote.create({
-                IdLoteBarcode: lote.idLoteBarcode,
-                Batelada: lote.Batelada,
-                IdOrdem: lote.idOrdem,
-                IdProduto: lote.idProduto,
-                Sequencia: lote.Sequencia,
-                Status: lote.Status
-            }); 
+                IdLoteBarcode: lote.idLoteBarcodePremix,
+                Batelada: lote.BateladaPremix,
+                IdOrdem: lote.idOrdemPremix,
+                IdProduto: lote.idProdutoPremix,
+                Sequencia: lote.SequenciaPremix,
+                Status: lote.StatusPremix,
+                idReceita: lote.idReceitaPremix
+            });
         
         }); 
         
@@ -86,7 +118,6 @@ async function criarLote(
     }
     
         
-    
 }
 
 async function gerarTabela(id) {
