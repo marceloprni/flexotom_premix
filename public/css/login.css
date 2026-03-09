@@ -21,7 +21,7 @@
 .container-login {
     position: absolute; 
     bottom: 10%; 
-    top: 76%;
+    top: 40%;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(217, 217, 217, 0.5);
@@ -88,7 +88,7 @@ input:-webkit-autofill
 
 @media(max-width: 1550px) {
     .container-login {
-        top: 40%;
+        top: 30%;
     }
 }
 

@@ -7,10 +7,10 @@ function usuarioAuth(req, res, next) {
           users.privilegio === 2004 ||
           users.privilegio === 1004
     ) {
-        console.log('agora passou 1')
+        //console.log('agora passou 1')
         next();
     } else {
-        console.log('agora passou 2')
+        //console.log('agora passou 2')
         res.render("users/login", { 
             privilegio1: 0,
             erro: " ",
@@ -27,7 +27,7 @@ function adminAuth(req, res, next) {
           admin.privilegio === 2004 ||
           admin.privilegio === 1004
         ) {
-          console.log("agora passou");
+          //console.log("agora passou");
           next();
         } else {
           res.render("users/login", {

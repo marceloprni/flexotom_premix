@@ -118,7 +118,10 @@ html, body {
 
 
 @media (max-width:380px) {
+	.navbarColor .nav_text p {
+		font-size: 1rem;
+	}
     .navbarLink ul{
-        top: 7%;
+        top: 4.5%;
     } 
 }

@@ -77,12 +77,15 @@ btnVinculaLoteFinal.onclick = function (event) {
             jQuery('#messageDivChildren').css({"background":"#E5192E", "border": "2px solid #fff", "color": "#fff"});
             jQuery('#message').modal('show');
             jQuery('#messageText').text(response.data.message);
+             
             setTimeout(() => {
                 //window.location.reload(); 
+                jQuery('#buscarLoteInput').val('');
                 jQuery('#adicionar-modal').modal('hide');
             },800);
     }).catch(error => {
             console.error(error);
+            jQuery('#buscarLoteInput').val('');
             const messagem = JSON.parse(error.request.responseText);
             jQuery('#barCodeModal').modal('hide');
             jQuery('#messageDivChildren').css({"background":"#ffc107", "border": "2px solid #fff"});

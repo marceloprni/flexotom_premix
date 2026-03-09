@@ -2,7 +2,7 @@ const Lote = require("../models1/Lote/Lote");
 const OrdemProducaos = require("../models/OrdemProducaos/OrdemProducaos");
 const {ModeloInvalidoErro, NaoAutorizadoErro } = require("../erros/typeErros");
 const { Op, Sequelize, QueryTypes, or} = require("sequelize");
-const { PLC, TagConst } = require("../utils/ethernetIp");
+const { PLC, TagConst, ReadConst } = require("../utils/ethernetIp");
 
 
 async function habilitaProducao(status, ordeArgamassa, idOrdemArgamassaId, ordemPremix, idPremix, idPremixLote) {
@@ -11,26 +11,29 @@ async function habilitaProducao(status, ordeArgamassa, idOrdemArgamassaId, ordem
     let messageErro;
 
     try {
-
+        // CONEXÃO COM O PLC
+        await PLC.connect("192.168.0.16", 0);
+        
         let verifyStatus = await Lote.findOne({
             where: {
-                idLoteBarcode: ordemPremix,
+                idLoteBarcode: ordemPremix, 
             }
         });
     
-      if(verifyStatus.Status == 1){
+      if(verifyStatus.Status == 1 ) {
            erroValue = 1;
            throw new Error()
 
+      } else if(verifyStatus == null || verifyStatus == undefined) {
+            erroValue = 3;
+           throw new Error()
        } else {  
-            // CONEXÃO COM O PLC
-            await PLC.connect("192.168.0.16", 0);
-    
-            //console.log(PLC.properties);
-            const httpPremix = await PLC.readTag(TagConst);
+            // LEITURA DA VARIAVEIL HTTPPREMIX
+            await PLC.readTag(ReadConst);
+            
 
-            if(httpPremix.value = 0){
-                await PLC.writeTag(TagConst, Number(idPremix));
+            if(ReadConst.value == 0){
+                await PLC.writeTag(TagConst, Number(verifyStatus.idReceita));
 
                 await Lote.update(
                     { 
@@ -48,8 +51,11 @@ async function habilitaProducao(status, ordeArgamassa, idOrdemArgamassaId, ordem
                  return {
                     message: 'Produto utilizado e ordem enviada para o controlador.'
                 }
-            } else {
+            } else if (ReadConst.value > 0) {
                 erroValue = 2;
+                throw new Error()
+            } else {
+                erroValue = 3;
                 throw new Error()
             } 
        }
@@ -59,13 +65,13 @@ async function habilitaProducao(status, ordeArgamassa, idOrdemArgamassaId, ordem
 
             switch(erroValue) {
                 case 1:
-                    messageErro = "Produto utilizado já, por favor usar outro.";
+                    messageErro = "Produto utilizado já, por favor utilizar outro premix.";
                     break;
                 case 2:
                     messageErro = "Produto ainda está na balança, aguardar a proxima batch.";
                     break;
                 default:
-                    messageErro = "Erro comunicação plc ou Erro no Banco de dados.";
+                    messageErro = "Erro de comunicação plc ou Erro no Banco de dados.";
             }
             throw new ModeloInvalidoErro(400, messageErro);
 

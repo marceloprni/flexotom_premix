@@ -61,8 +61,7 @@ class cadastroLoteController {
             TamanhoBatch
            )
 
-           console.log('salve no controller:');
-           console.log(salve)
+           
 
             if(salve) {
                 res.status(201).json({ message:  salve.value});

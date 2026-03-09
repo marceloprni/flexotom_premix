@@ -37,7 +37,7 @@ function createTable() {
         LoteTotal = []
         OrdemProducao = []
 
-        console.log(response)
+        //console.log(response)
        
         for(let a of response.data.OrdemProducao) {
             OrdemProducao.push({id: a.id, text: a.Descricao})
@@ -103,9 +103,9 @@ btnCriarTabela.onclick = function (event) {
 /* CADASTRO O LOTE NO BANCO DE DADOS */
 btnCriarLote.onclick  = function (event) {
     event.preventDefault();
-    console.log('id valido')
-    console.log(valorSelecionadoId)
-    console.log(valorSelecionado)
+    //console.log('id valido')
+    //console.log(valorSelecionadoId)
+    //console.log(valorSelecionado)
 
     if (
            valorSelecionadoId === '' 
