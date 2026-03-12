@@ -29,13 +29,16 @@ class cadastroLoteController {
 
             let dadosLote = await cadastroLoteService.gerarTabela(ID);
             
-
-            if(dadosLote.OrdemProducao.length === 0) {
-                throw new ModeloInvalidoErro(400,"Não tem lote criado para essa ordem.");
-            } else {
-                 res.status(200).json(dadosLote)
+            if(dadosLote.ordemComProduto > 0 
+            &&  dadosLote.OrdemProducao.length === 0) {
+                throw new ModeloInvalidoErro(400,"Já foi utilizado todos os lotes.");
             }
-
+            else if(dadosLote.ordemComProduto === 0
+            && dadosLote.OrdemProducao.length === 0) {
+                throw new ModeloInvalidoErro(400,"Não tem etiqueta gerada para essa ordem.");    
+            } else {
+                 res.status(200).json(dadosLote.OrdemProducao)
+            }
         } catch (err) {
             res.status(400).send({ erro: err.message, privilegio1: req.session.user.privilegio, acionaWarmin: false });
         }
@@ -60,8 +63,6 @@ class cadastroLoteController {
             QuantidadePrevista,
             TamanhoBatch
            )
-
-           
 
             if(salve) {
                 res.status(201).json({ message:  salve.value});

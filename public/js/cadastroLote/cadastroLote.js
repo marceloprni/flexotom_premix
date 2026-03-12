@@ -26,8 +26,6 @@ var valorSelecionado
 var tableCadastroLote
 
 
-
-
 /* FUNÇÕES DE INICIOS PARA CARREGAR DADOS */
 function createTable() {
     
@@ -40,7 +38,7 @@ function createTable() {
         //console.log(response)
        
         for(let a of response.data.OrdemProducao) {
-            OrdemProducao.push({id: a.id, text: a.Descricao})
+            OrdemProducao.push({id: a.id, text: `${a.Lote}-${a.Descricao}`})
             LoteTotal.push([a.id, a.Codigo, a.Descricao, a.Linha, a.Receita, a.QuantidadePrevista, a.TamanhoBatch, a.Lote]);
         }
 
@@ -81,7 +79,7 @@ btnCriarTabela.onclick = function (event) {
         console.log(response)
         TabelaBarCode = []
 
-        for(let a of response.data.OrdemProducao) {
+        for(let a of response.data) {
             TabelaBarCode.push([a.idReceita, a.IdLoteBarcode, a.Batelada, a.Sequencia]);
         }
 

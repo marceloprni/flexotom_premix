@@ -8,6 +8,7 @@ const { Op, Sequelize, QueryTypes} = require("sequelize");
 
 async function dadosParaPage() {
 
+    // RETIRADO { Status: 'A' }, { Status: 'P' }
     let ordemProducao = await OrdemProducao.findAll({
           attributes: ['id', 'Codigo', 'QuantidadePrevista', 'Linha', 'BatchsProduzidos', 'TamanhoBatch','Descricao', 'Receita', 'Lote'],
           order: [
@@ -15,14 +16,13 @@ async function dadosParaPage() {
           ],
           where: {
               Linha: 2,
-              [Op.or]: [{ Status: 'A' }, { Status: 'P' }, { Status: 'F' } ],
+              [Op.or]: [{ Status: 'F' } ],
           },
     });
 
     if(!ordemProducao ) {
         return {
           ordemProducao: [],
-          
         };
     } else {
         return {
@@ -122,23 +122,33 @@ async function criarLote(
 
 async function gerarTabela(id) {
 
+    let { count, rows } = await Lote.findAndCountAll({
+        order: [
+            ['id', 'ASC']
+        ],
+        where: {
+            IdOrdem: id,
+        },
+    });
+
     let ordemProducao = await Lote.findAll({
           order: [
               ['id', 'ASC']
           ],
           where: {
-              [Op.and]: [{ IdOrdem: id }, { Status: 0 }],
+              [Op.and]: [{ IdOrdem: id }, { Status: 0 } ],
           },
     });
 
-
     if(!ordemProducao ) {
         return {
-          ordemProducao: [],   
+          OrdemProducao: [],
+          ordemComProduto: count
         };
     } else {
         return {
-            OrdemProducao: ordemProducao
+            OrdemProducao: ordemProducao,
+            ordemComProduto: count
         };
     }
 
