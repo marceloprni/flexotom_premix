@@ -3,29 +3,77 @@
 
 <main class="container_principal">
     <section>
-        <% if(privilegio1 == 2 || privilegio1 == 2004 || privilegio1 == 1004) { %>
-            <div class="container_link cadastroLote">
-                <img src="/image/pageSelection/arrow_low.svg" alt="">
-                <a href="/cadastroLote">GERAR<br> ETIQUETA</a>
-            </div>
 
-            <div class="container_link vinculacaoLote"> 
-                <img src="/image/pageSelection/arrow_low.svg" alt="">
-                <a href="/habProdLote">HABILITA <br>PRODUÇÃO</a>
-            </div>
+        <div class="separation_area">
+            <div class="separation_area2">
+                <div class="separation_area3">
+                    <h3>PREMIX</h3>
+                </div>
+
+                <div class="separation_area3">
+                    <% if(privilegio1 == 2 || privilegio1 == 2004 || privilegio1 == 1004) { %>
+                    <div class="container_link cadastroLote">
+                        <img src="/image/pageSelection/arrow_low.svg" alt="">
+                        <a href="/cadastroLote">GERAR<br> ETIQUETA</a>
+                    </div>
+                
+                    <div class="container_link vinculacaoLote"> 
+                        <img src="/image/pageSelection/arrow_low.svg" alt="">
+                        <a href="/habProdLote">HABILITA <br>PRODUÇÃO</a>
+                    </div>
 
         
-        <% } else if (privilegio1 == 3 || privilegio1 == 6 || privilegio1 == 5) { %>
-            <div class="container_link cadastroLote">
-                <img src="/image/pageSelection/arrow_low.svg" alt="">
-                <a href="/cadastroLote">GERAR<br> ETIQUETA</a>
+                    <% } else if (privilegio1 == 3 || privilegio1 == 6 || privilegio1 == 5) { %>
+                        <div class="container_link cadastroLote">
+                            <img src="/image/pageSelection/arrow_low.svg" alt="">
+                            <a href="/cadastroLote">GERAR<br> ETIQUETA</a>
+                        </div>
+                    
+                        <div class="container_link vinculacaoLote"> 
+                            <img src="/image/pageSelection/arrow_low.svg" alt="">
+                            <a href="/habProdLote">HABILITA <br>PRODUÇÃO</a>
+                        </div>
+                    <% } %> 
+                </div>
             </div>
 
-            <div class="container_link vinculacaoLote"> 
-                <img src="/image/pageSelection/arrow_low.svg" alt="">
-                <a href="/habProdLote">HABILITA <br>PRODUÇÃO</a>
+            <div class="separation_area2">
+                <div class="separation_area3">
+                    <H3>VINCULAÇÃO DE LOTE</H3>
+                </div>
+                
+                <div class="separation_area3">
+                    <% if(privilegio1 == 2 || privilegio1 == 2004 || privilegio1 == 1004) { %>
+                    <div class="container_link cadastroLote">
+                        <img src="/image/pageSelection/arrow_low.svg" alt="">
+                        <a href="/cadastroLote">CADASTRO <br>DE <br>LOTE</a>
+                    </div>
+                
+                    <div class="container_link vinculacaoLote"> 
+                        <img src="/image/pageSelection/arrow_low.svg" alt="">
+                        <a href="/vincularLote">VINCULAÇÃO <br>DE <br>LOTE</a>
+                    </div>
+                
+                    <div class="container_link visualizarLote visualizar_lote_pageselect">
+                        <img src="/image/pageSelection/binoculos.svg" alt="">
+                        <a href="/vizualizarLote">VISUALIZAÇÃO <br>DE <br>LOTE</a>
+                    </div>
+
+        
+                    <% } else if (privilegio1 == 3 || privilegio1 == 6 || privilegio1 == 5) { %>
+                        <div class="container_link cadastroLote">
+                            <img src="/image/pageSelection/arrow_low.svg" alt="">
+                            <a href="/cadastroLote">GERAR<br> ETIQUETA</a>
+                        </div>
+                    
+                        <div class="container_link vinculacaoLote"> 
+                            <img src="/image/pageSelection/arrow_low.svg" alt="">
+                            <a href="/habProdLote">HABILITA <br>PRODUÇÃO</a>
+                        </div>
+                    <% } %> 
+                </div>
             </div>
-        <% } %> 
+        </div>
     </section>
 </main>
         
