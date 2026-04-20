@@ -65,14 +65,14 @@ html, body {
 }
 
 .icon_nav{
-	margin: 0;
-	padding: 0;
+	margin-right: 8px;
 }
 
 .navbarLink ul li {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	gap: 0.5px;
 }
 
 .icon_mobile {

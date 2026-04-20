@@ -4,6 +4,7 @@ const router = express.Router();
 const { adminAuth, usuarioAuth } = require("./middlewares/adminAuth");
 const UsuarioController = require("./controller/usuarioController");
 const CadastroLoteController = require("./controller/cadastroLoteController");
+const CadastroLoteMaterialController = require("./controller/cadastroLoteMateriaController");
 const HabilitaProducaoController = require("./controller/habilitaProducaoController");
 const VisualizarLoteController = require("./controller/visualizarLoteController");
 
@@ -11,6 +12,8 @@ const usuarioController = new UsuarioController();
 const cadastroLoteController = new CadastroLoteController();
 const habilitaProducaoController = new HabilitaProducaoController();
 const visualizarLoteController = new VisualizarLoteController();
+
+const cadastroLoteMateriaController = new CadastroLoteMaterialController()
 
 router.use(session({
   secret: "secret",
@@ -20,6 +23,7 @@ router.use(session({
     maxAge: (60000 * 60) 
   }
 }))
+
 
 /***************** ROTA LOGIN *****************/
 router.get("/", (req, res) => { 
@@ -33,6 +37,17 @@ router.get("/", (req, res) => {
 /* POST */
 router.post("/login", usuarioController.login); 
 router.get("/logout", usuarioController.logout); 
+
+
+/***************** HOME *****************/
+
+router.get("/home", usuarioAuth, (req, res) => {
+  res.render("pageSelection/pageSelection", {
+      privilegio1: req.session.user.privilegio,
+      erro: " ",
+      acionaWarmin: false
+  });
+}); 
 
 
 /***************** CADASTRO DE LOTE *****************/
@@ -75,5 +90,19 @@ router.get("/vizualizarLote", usuarioAuth, (req, res) => {
 }); 
 
 router.get("/visualizarLote/dadosLote", usuarioAuth, visualizarLoteController.dadosLoteVisualizar)
+
+/***************** CADASTRO LOTE MATERIA *****************/
+
+router.get("/cadastroLoteMateria", adminAuth, (req, res) => {
+  res.render("cadastroLote/cadastroLoteMateria", {
+      privilegio1: req.session.user.privilegio,
+      erro: " ",
+      acionaWarmin: false
+  });
+}); 
+
+router.get("/cadastroLoteMateria/dadosLote", adminAuth, cadastroLoteMateriaController.dadosLote);
+router.post("/cadastroLoteMateria/criarLote", adminAuth, cadastroLoteMateriaController.criarLote);
+router.delete("/cadastroLoteMateria/:deleteLote", adminAuth, cadastroLoteMateriaController.deletaLoteUnico);
 
 module.exports = router

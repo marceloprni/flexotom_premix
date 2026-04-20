@@ -23,6 +23,10 @@ server.connection1.authenticate()
   .then(() => console.log('db flexotom1 connection'))
   .catch(error => console.error('Erro na conexão:', error));
 
+server.connection2.authenticate()
+  .then(() => console.log('db flexotom2 connection'))
+  .catch(error => console.error('Erro na conexão:', error));
+
 // Sincroniza com o banco (sem forçar alterações)
 /*
 server.connection.sync({ force: false })

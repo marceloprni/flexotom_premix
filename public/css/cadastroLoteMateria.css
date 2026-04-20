@@ -1,0 +1,139 @@
+.container_main_materia {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    padding: 1rem;
+}
+
+.container_section_first_materia {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    justify-content: space-between;
+}
+
+.group_seleciona_materia_materia {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30.8rem;
+    height: 28rem;
+    background-color: rgba(217, 217, 217, 0.5);
+    border-radius: 0.62rem;
+    gap: 1rem;
+    padding: 1.28rem;
+}
+
+.group_seleciona_materia_materia label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #F3E8FF;
+}
+
+.group_input_parametros_materia {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.group_selectiona_btn_materia {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: flex-end;
+    gap: 1rem;
+    height: 28rem;
+}
+
+.selectPrima_materia,
+.select2-container--default .select2-selection--single,
+.inputPrima_materia {
+    height: 3rem;
+    border-radius: 0.62rem;
+}
+
+.select2-container--default .select2-selection--single {
+    padding-top: 0.5rem;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 0.6rem;
+}
+
+.btn_criar_materia {
+    background: #D9D9D9;
+    height: 3rem;
+    color: #44403C;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.5rem;
+    border-radius: 0.62rem;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    z-index: 1;
+}
+
+.btn_criar_materia:hover {
+    background-color: oklch(97% 0.001 106.424);
+}
+
+.btn_tabela_materia {
+    background: #D9D9D9;
+    width: 10rem;
+    height: 3rem;
+    color: #44403C;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 0.62rem;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.btn_tabela_materia:hover {
+    background-color: oklch(97% 0.001 106.424);
+}
+
+#barCodeDiv_materia {
+    width: 520px;
+    background-color: #FFFFFF;
+    color: #2f2d2d;
+}
+
+.container_section_second {
+    width: 100%;
+}
+
+#tabela-CadastroLote_materia thead {
+    color: #FFFFFF;
+}
+#tabela-CadastroLote_materia thead th {
+    border-top: none;
+}
+
+#tabela-CadastroLote_materia thead {
+    width: 100%;
+}
+
+#tabela-CadastroLote_materia body {
+    width: 100%;
+} 
+
+#tabela-CadastroLote_materia_wrapper{
+    padding: 0.3rem;
+    
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    color: #FFFFFF;
+}
+
+.container_table_materia .dataTables_wrapper .row {
+    margin: 0;
+}
+
+
+

@@ -1,3 +1,4 @@
+/* BANCO FLEXOTOM1  */
 const Sequelize = require('sequelize');
 const database = require('../config/databaseConfigDb');
 

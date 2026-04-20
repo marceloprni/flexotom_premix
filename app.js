@@ -5,6 +5,7 @@ const session = require("express-session");
 /* SQL */
 const {connection, models} = require('./database/database');
 const { connection1 } = require('./database/database1');
+const { connection2 } = require('./database/database2');
 
 const routes = require('./routes');
 
@@ -21,6 +22,7 @@ module.exports = {
   connection,
   models,
   connection1,
+  connection2,
   routes,
   express,
   bodyParser,
