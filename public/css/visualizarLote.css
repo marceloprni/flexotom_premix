@@ -1,6 +1,52 @@
+.container_section_action {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 1rem;
+}
+
+.group_visualizarLote {
+    height: auto;
+    
+}
+
+.group_visualizarLote label {
+    color: #FFFFFF;
+}
+
+.group_visualizarLote input {
+    border-radius: 0.62rem;
+    height: 2rem;
+}
+
+.btn_criar_visualizarLote {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #D9D9D9;
+    height: 2rem;
+    color: #44403C;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.5rem;
+    border-radius: 0.62rem;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    z-index: 1;
+}
+
+.btn_criar_visualizarLote:hover {
+    background-color: oklch(97% 0.001 106.424);
+}
+
+
 .table_visualizar_principal,
 .container_section_visualizar {
     height: 36.87rem;
+}
+
+#tabela-VisualizarLote thead  {
+    color: #FFFFFF;
 }
 
 #tabela-VisualizarLote thead th {
@@ -13,11 +59,6 @@
 
 .table_visualizar_principal .dataTables_wrapper .row {
     margin: 0;
-}
-
-.group_visualizarLote {
-    height: 5rem;
-    
 }
 
 .status-estoque {

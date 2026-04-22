@@ -1,7 +1,7 @@
 const Lote = require("../models1/Lote/Lote");
 const OrdemProducao = require("../models/OrdemProducaos/OrdemProducaos");
 const Receitas = require("../models/Receitas/Receitas");
-const gerarUUID = require("../utils/geradorUUID");
+const { gerarUUID } = require("../utils/geradorUUID");
 const {ModeloInvalidoErro, NaoAutorizadoErro } = require("../erros/typeErros");
 const { Op, Sequelize, QueryTypes} = require("sequelize");
 

@@ -6,13 +6,14 @@ const UsuarioController = require("./controller/usuarioController");
 const CadastroLoteController = require("./controller/cadastroLoteController");
 const CadastroLoteMaterialController = require("./controller/cadastroLoteMateriaController");
 const HabilitaProducaoController = require("./controller/habilitaProducaoController");
+const VincularLoteController = require("./controller/vincularLoteController");
 const VisualizarLoteController = require("./controller/visualizarLoteController");
 
 const usuarioController = new UsuarioController();
 const cadastroLoteController = new CadastroLoteController();
 const habilitaProducaoController = new HabilitaProducaoController();
 const visualizarLoteController = new VisualizarLoteController();
-
+const vincularLoteController = new VincularLoteController();
 const cadastroLoteMateriaController = new CadastroLoteMaterialController()
 
 router.use(session({
@@ -89,7 +90,10 @@ router.get("/vizualizarLote", usuarioAuth, (req, res) => {
   });
 }); 
 
-router.get("/visualizarLote/dadosLote", usuarioAuth, visualizarLoteController.dadosLoteVisualizar)
+router.get("/visualizarLote/dadosTimer/:dataInicio/:dataFim", usuarioAuth, visualizarLoteController.dadosTimer);
+router.get("/visualizarLote/materiaPrima/:materiaPrima", usuarioAuth, visualizarLoteController.dadosMateriaPrima);
+router.get("/visualizarLote/Lote/:lote", usuarioAuth, visualizarLoteController.dadosLote);
+//router.get("/visualizarLote/dadosLote", usuarioAuth, visualizarLoteController.dadosLoteVisualizar)
 
 /***************** CADASTRO LOTE MATERIA *****************/
 
@@ -104,5 +108,21 @@ router.get("/cadastroLoteMateria", adminAuth, (req, res) => {
 router.get("/cadastroLoteMateria/dadosLote", adminAuth, cadastroLoteMateriaController.dadosLote);
 router.post("/cadastroLoteMateria/criarLote", adminAuth, cadastroLoteMateriaController.criarLote);
 router.delete("/cadastroLoteMateria/:deleteLote", adminAuth, cadastroLoteMateriaController.deletaLoteUnico);
+
+/***************** VINCULAÇÃO DE LOTE *****************/
+
+router.get("/vincularLote", usuarioAuth, (req, res) => {
+  res.render("vinculacaoLote/vinculacaoLote", {
+      privilegio1: req.session.user.privilegio,
+      erro: " ",
+      acionaWarmin: false
+  });
+}); 
+
+router.get("/vincularLote/dadosLote", usuarioAuth, vincularLoteController.dadosLoteVinculo);
+router.get("/vincularLote/:barcode", usuarioAuth, vincularLoteController.barcodeVinculo);
+router.post("/vincularLote/:vincularLote", usuarioAuth, vincularLoteController.criarVinculoLote);
+router.delete("/vincularLote/:vincularDeleteLote", usuarioAuth, vincularLoteController.deletarLoteVinculo);
+
 
 module.exports = router

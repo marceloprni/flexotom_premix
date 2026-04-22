@@ -3,9 +3,25 @@
 
 
 <main class="container_main">
-    <section class="container_section_first">
+    <section class="container_section_action">
         <div class="group_selectiona_btn group_visualizarLote">
-           <!--<button class="btn_tabela" id="btn_vincular_lote">ALTERAR</button>--> 
+           <label for="">Inicio</label>
+           <input type='date' name='dateInicio' id="timeInicio">
+           <label for="">Fim</label>
+           <input type='date' name='dateFim' id="timeFim">
+           <button id="btnBuscarMateriaTime" class="btn_criar_visualizarLote">Buscar</button>
+        </div>
+
+        <div class="group_selectiona_btn group_visualizarLote">
+           <label for="">Materia Prima</label>
+           <input type='text' id="materiaPrima">
+           <button id="btnBuscarMateriaMateriaPrima" class="btn_criar_visualizarLote">Buscar</button>
+        </div>
+
+        <div class="group_selectiona_btn group_visualizarLote">
+           <label for="">Lote</label>
+           <input type='text' id="lote">
+           <button id="btnBuscarMateriaLote" class="btn_criar_visualizarLote">Buscar</button>
         </div>
     </section>
 

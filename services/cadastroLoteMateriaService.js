@@ -1,6 +1,6 @@
 const Lote = require("../models2/Lote/Lote");
 const Insumos = require("../models/Insumos/Insumos");
-const gerarUUID = require("../utils/geradorUUID");
+const { gerarUUIDMaterial } = require("../utils/geradorUUID");
 const {ModeloInvalidoErro, NaoAutorizadoErro } = require("../erros/typeErros");
 const { Op, Sequelize, QueryTypes} = require("sequelize");
 
@@ -45,7 +45,7 @@ async function dadosParaPage() {
 
 async function criarLote(LoteIn, materiaPrimaId, materiaPrima) {
 
-    const geradorId = gerarUUID(materiaPrimaId);
+    const geradorId = gerarUUIDMaterial(materiaPrimaId);
     const statusValue = 'SV';
 
     if (!materiaPrimaId || !materiaPrima) {

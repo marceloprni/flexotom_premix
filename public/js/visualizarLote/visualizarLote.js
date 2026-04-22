@@ -1,92 +1,112 @@
+import { criarTabelaCadastroLote } from "./tabelaPrincipalVisualizarLote.js";
+import { parseDate } from "./timerDate.js";
+import { tratamentoJson } from "./tratamentoJson.js";
+
+// VAR INPUT
+const dataInicio = document.getElementById('timeInicio');
+const dataFim = document.getElementById('timeFim');
+const materiaPrima = document.getElementById('materiaPrima');
+const lote = document.getElementById('lote');
+
+
+
+// BTN 
+const btnData = document.getElementById('btnBuscarMateriaTime');
+const btnMateriaPrima = document.getElementById('btnBuscarMateriaMateriaPrima');
+const btnLote = document.getElementById('btnBuscarMateriaLote');
 
 
 // VARIAVEL GLOBAL E ARRAY
 let VisualizarLote = [];
 let tableVisualizarLote;
 
+btnData.onclick  = function (event) {
+    event.preventDefault();
+    let dataInicioValorReal = parseDate(dataInicio.value);
+    let dataFimValorReal = parseDate(dataFim.value);
 
-// CARREGA DADOS NA TABELA
-function createTable() {
-    axios.get("/visualizarLote/dadosLote").then(response => {
-        //APAGA DADOS DO ARRAY
-        VisualizarLote = [];
+    if (
+           dataInicio.value === '' 
+        || dataFim.value === '' 
+        || dataInicio === undefined 
+        || dataFim === undefined) {
+        alert("Selecione os períodos entre a data de início e data de fim.");
+        return;
+    }
+
+    if (dataInicioValorReal > dataFimValorReal) {
+        alert("A data de início não pode ser maior que a data de fim. Por favor, corrija.");
+    }
+
+    axios.get(`/visualizarLote/dadosTimer/${dataInicio.value}/${dataFim.value}`).then(response => {
         console.log(response)
-        
-        for(let b of response.data.loteAtivo){
-
-            if(b.Status === "SV") {
-                VisualizarLote.push([
-                    b.Lote, 
-                    b.MateriaPrimaIdInsumo,
-                    b.MateriaPrimaInsumo,
-                    b.Barcode,
-                    'EM ESTOQUE'
-                ]);
-            } else if (b.Status === "CV") {
-                VisualizarLote.push([
-                    b.Lote, 
-                    b.MateriaPrimaIdInsumo,
-                    b.MateriaPrimaInsumo,
-                    b.Barcode,
-                    'PRODUZINDO'
-                ]);
-            } else {
-                    VisualizarLote.push([
-                    b.Lote, 
-                    b.MateriaPrimaIdInsumo,
-                    b.MateriaPrimaInsumo,
-                    b.Barcode,
-                    'FINALIZADO'
-                ]);
-            }
-            
-        }
-        
-        tableVisualizarLote = jQuery('#tabela-VisualizarLote').DataTable(
-            {
-                pageLength : 10,
-                bLengthChange: false,
-                bFilter: true,
-                data: VisualizarLote,
-                columns: [{title: "LOTE"}, {title: "MATERIA PRIMA ID"}, {title: "MATERIA PRIMA"}, {title: "BARCODE"}, {title: "STATUS"}],
-                ordering: false,
-                 columnDefs: [
-                    {
-                        targets: 4, // índice da coluna "STATUS"
-                        createdCell: function(td, cellData, rowData, row, col) {
-                            if (cellData === 'EM ESTOQUE') {
-                                $(td).addClass('status-estoque');
-                            } else if (cellData === 'PRODUZINDO') {
-                                $(td).addClass('status-producao');
-                            } else if (cellData === 'FINALIZADO') {
-                                $(td).addClass('status-finalizado');
-                            }
-                        }
-                    }
-                ]
-            });
-        
-        
-        jQuery('#tabela-VisualizarLote tbody').on('click', 'tr', function () 
-        {
-            var tr = jQuery(this).closest('tr');
-            var row = tableVisualizarLote.row(tr);
-            /*Check if row is empty*/
-            if (typeof row.data() === 'undefined'){return null;}
-            /*Selected row*/
-            if (jQuery(this).hasClass('tableSelected')){
-                jQuery(this).removeClass('tableSelected');
-            }
-            else {
-                tableVisualizarLote.$('tr.tableSelected').removeClass('tableSelected');
-                jQuery(this).addClass('tableSelected');
-            }   
-        });
-
+        let dadosTratados = tratamentoJson(response.data);
+        criarTabelaCadastroLote(dadosTratados);
     }).catch(error => {
-        console.log(error);
+        console.error(error);
+        const messagem = JSON.parse(error.request.responseText);
+        jQuery('#adicionar-modal').modal('hide');
+        jQuery('#messageDivChildren').css({"background":"#ffc107", "border": "2px solid #fff"});
+        jQuery('#message').modal('show');
+        jQuery('#messageText').text(messagem.erro);
+    });
+};
+
+btnMateriaPrima.onclick  = function (event) {
+    event.preventDefault();
+
+    if (
+        materiaPrima.value === '' 
+        || materiaPrima === undefined 
+  ) {
+        alert("Digite a matéria-prima.");
+        return;
+    }
+
+    const materiaPrimaTratada = encodeURIComponent(materiaPrima.value);
+    console.log('trado materia')
+    console.log(materiaPrimaTratada)
+    axios.get(`/visualizarLote/materiaPrima/${materiaPrimaTratada}`).then(response => {
+        console.log(response)
+        let dadosTratados = tratamentoJson(response.data);
+        criarTabelaCadastroLote(dadosTratados);
+    }).catch(error => {
+        console.error(error);
+        const messagem = JSON.parse(error.request.responseText);
+        jQuery('#adicionar-modal').modal('hide');
+        jQuery('#messageDivChildren').css({"background":"#ffc107", "border": "2px solid #fff"});
+        jQuery('#message').modal('show');
+        jQuery('#messageText').text(messagem.erro);
+    });
+};
+
+btnLote.onclick  = function (event) {
+    event.preventDefault();
+
+    if (
+        lote.value === '' 
+        || lote === undefined 
+  ) {
+        alert("Digite o lote.");
+        return;
+    }
+
+    const loteTratado = encodeURIComponent(lote.value);
+    
+    axios.get(`/visualizarLote/Lote/${loteTratado}`).then(response => {
+        console.log(response)
+        let dadosTratados = tratamentoJson(response.data);
+        criarTabelaCadastroLote(dadosTratados);
+    }).catch(error => {
+        console.error(error);
+        const messagem = JSON.parse(error.request.responseText);
+        jQuery('#adicionar-modal').modal('hide');
+        jQuery('#messageDivChildren').css({"background":"#ffc107", "border": "2px solid #fff"});
+        jQuery('#message').modal('show');
+        jQuery('#messageText').text(messagem.erro);
     });
 };
 
 
-createTable();
+// INICIA TABELA VAZIA 
+criarTabelaCadastroLote([]);
