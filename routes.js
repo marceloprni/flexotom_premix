@@ -53,7 +53,7 @@ router.get("/home", usuarioAuth, (req, res) => {
 
 /***************** CADASTRO DE LOTE *****************/
 
-router.get("/cadastroLote", adminAuth, (req, res) => {
+router.get("/cadastroLote", usuarioAuth, (req, res) => {
   res.render("cadastroLote/cadastroLote", {
       privilegio1: req.session.user.privilegio,
       erro: " ",
@@ -61,9 +61,9 @@ router.get("/cadastroLote", adminAuth, (req, res) => {
   });
 }); 
 
-router.get("/cadastroLote/dadosLote", adminAuth, cadastroLoteController.dadosLote);
-router.get("/cadastroLote/gerarTabela/:ID", adminAuth, cadastroLoteController.gerarTabela);
-router.post("/cadastroLote/criarLote", adminAuth, cadastroLoteController.criarLote);
+router.get("/cadastroLote/dadosLote", usuarioAuth, cadastroLoteController.dadosLote);
+router.get("/cadastroLote/gerarTabela/:ID", usuarioAuth, cadastroLoteController.gerarTabela);
+router.post("/cadastroLote/criarLote", usuarioAuth, cadastroLoteController.criarLote);
 
 
 /***************** HABILITA PRODUCAO *****************/
@@ -76,13 +76,12 @@ router.get("/habProdLote", usuarioAuth, (req, res) => {
   });
 }); 
 
-
 router.get("/habilitaProducao/gerarPop/:ID", usuarioAuth, habilitaProducaoController.verifyDados);
 router.put("/habilitaProducao/habilitaProduto", usuarioAuth, habilitaProducaoController.habilitaProduto);
 
 
 /***************** VISUALIZAÇÃO DE LOTE *****************/
-router.get("/vizualizarLote", usuarioAuth, (req, res) => {
+router.get("/vizualizarLote", adminAuth, (req, res) => {
   res.render("visualizarLote/visualizarLote", {
       privilegio1: req.session.user.privilegio,
       erro: " ",
@@ -90,14 +89,14 @@ router.get("/vizualizarLote", usuarioAuth, (req, res) => {
   });
 }); 
 
-router.get("/visualizarLote/dadosTimer/:dataInicio/:dataFim", usuarioAuth, visualizarLoteController.dadosTimer);
-router.get("/visualizarLote/materiaPrima/:materiaPrima", usuarioAuth, visualizarLoteController.dadosMateriaPrima);
-router.get("/visualizarLote/Lote/:lote", usuarioAuth, visualizarLoteController.dadosLote);
-//router.get("/visualizarLote/dadosLote", usuarioAuth, visualizarLoteController.dadosLoteVisualizar)
+router.get("/visualizarLote/dadosTimer/:dataInicio/:dataFim", adminAuth, visualizarLoteController.dadosTimer);
+router.get("/visualizarLote/materiaPrima/:materiaPrima", adminAuth, visualizarLoteController.dadosMateriaPrima);
+router.get("/visualizarLote/Lote/:lote", adminAuth, visualizarLoteController.dadosLote);
+//router.get("/visualizarLote/dadosLote", adminAuth, visualizarLoteController.dadosLoteVisualizar)
 
 /***************** CADASTRO LOTE MATERIA *****************/
 
-router.get("/cadastroLoteMateria", adminAuth, (req, res) => {
+router.get("/cadastroLoteMateria", usuarioAuth, (req, res) => {
   res.render("cadastroLote/cadastroLoteMateria", {
       privilegio1: req.session.user.privilegio,
       erro: " ",
@@ -105,9 +104,9 @@ router.get("/cadastroLoteMateria", adminAuth, (req, res) => {
   });
 }); 
 
-router.get("/cadastroLoteMateria/dadosLote", adminAuth, cadastroLoteMateriaController.dadosLote);
-router.post("/cadastroLoteMateria/criarLote", adminAuth, cadastroLoteMateriaController.criarLote);
-router.delete("/cadastroLoteMateria/:deleteLote", adminAuth, cadastroLoteMateriaController.deletaLoteUnico);
+router.get("/cadastroLoteMateria/dadosLote", usuarioAuth, cadastroLoteMateriaController.dadosLote);
+router.post("/cadastroLoteMateria/criarLote", usuarioAuth, cadastroLoteMateriaController.criarLote);
+router.delete("/cadastroLoteMateria/:deleteLote", usuarioAuth, cadastroLoteMateriaController.deletaLoteUnico);
 
 /***************** VINCULAÇÃO DE LOTE *****************/
 
